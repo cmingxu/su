@@ -1,0 +1,17 @@
+default: &default
+  sitename: ""
+  title: "建构中国"
+  domain: ""
+  description: ""
+
+production:
+  <<: *default
+
+development:
+  <<: *default
+
+staging:
+  <<: *default
+
+test:
+  <<: *default

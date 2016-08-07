@@ -38,7 +38,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :session
+  resource :session, controller: :session
+  resource :registration, only: [:new, :create], controller: :registration
 
 
   root 'welcome#index'

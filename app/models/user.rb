@@ -21,10 +21,14 @@
 #
 
 class User < ActiveRecord::Base
+  SALT = "foobar-su"
+
   include UUID
   after_create do
     self.update_column :auth_token, SecureRandom.hex(16)
   end
+
+  attr_accessor :password
 
   has_many :folders
   has_many :entities
@@ -52,4 +56,17 @@ class User < ActiveRecord::Base
   def roles_in_words
     [self.user? ? "注册用户" : nil,  self.admin? ? "管理员" : nil].compact
   end
+
+  def password=(pass)
+    self.encrypted_password = encrypt_password(pass)
+  end
+
+  def password_valid?(pass)
+    self.encrypted_password == encryt_password(pass)
+  end
+
+  def encryt_password(pass)
+    Digest::SHA1.hexdigest(SALT + pass)
+  end
 end
+

@@ -27,7 +27,7 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-
+gem 'sprockets', '3.6.3'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
@@ -75,6 +75,8 @@ gem 'c3-rails'
 gem 'angular-rails-templates'
 gem 'therubyracer' 
 gem 'coffee-script-source'
+gem 'simple_form'
+
 
 
 
