@@ -1,7 +1,7 @@
 module ApplicationHelper
 
-  def uk_icon(icon)
-    raw(content_tag(:i, "", class: "uk-icon-#{icon}") + " ")
+  def gly_icon(icon, text = "")
+    raw(content_tag(:span, text, class: "glyphicon glyphicon-#{icon}") + " ")
   end
 
 end

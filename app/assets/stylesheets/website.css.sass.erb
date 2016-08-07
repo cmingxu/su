@@ -1,37 +1,13 @@
 @import 'c3'
-@import "uikit"
-@import "uikit/almost-flat"
+@import "bootstrap/dist/css/bootstrap.min"
 
-$fc-main-font-color: #E5E5E5
-$sidebar-width: 160px
+
+@font-face
+  font-family: 'Glyphicons Halflings'
+  src: url('/assets/glyphicons-halflings-regular.eot')
+  src: url('/assets/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('/assets/glyphicons-halflings-regular.woff') format('woff'), url('/assets/glyphicons-halflings-regular.ttf') format('truetype'), url('/assets/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg')
+
 
 body
   background-image: url(<%= asset_path('ZenBG.png') %>)
   background-repeat: repeat
-
-.fc-container
-  padding-top: 50px
-  padding-left: $sidebar-width + 30
-  background-color: #fff
-  position: relative
-.fc-sidebar
-  width: $sidebar-width
-  position: absolute
-  left: 0px
-  top: 50px
-  border-right: 1px solid $fc-main-font-color
-.fc-main
-  width: 100%
-  min-height: 1000px
-.fc-nav > li > a
-  color: #777
-
-.ke-container
-  width: 400px!important
-.fc-nav
-  li
-    &:hover
-      a
-        color: white
-      background-color: #777
-

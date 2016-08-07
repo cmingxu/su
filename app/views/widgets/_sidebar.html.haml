@@ -1,18 +1,17 @@
-%ul.uk-nav.fc-nav{'data-uk-nav' => true}
-  %li.uk-nav-header Defaults
-  %li.uk-active
-    = link_to uk_icon(:home) + "我的首页", dashboard_path
+%ul
   %li
-    = link_to uk_icon("cubes") + "我的模型", dashboard_entities_path
+    = link_to gly_icon(:home) + "我的首页", dashboard_path
+  %li
+    = link_to gly_icon("cubes") + "我的模型", dashboard_entities_path
   - if policy(Vendor.new)
-    %li= link_to uk_icon(:user) + "材料管理", dashboard_materials_path
-    %li= link_to uk_icon(:cubes) + "材料商管理", dashboard_vendors_path
+    %li= link_to gly_icon(:user) + "材料管理", dashboard_materials_path
+    %li= link_to gly_icon(:cubes) + "材料商管理", dashboard_vendors_path
     %li.uk-nav-divider
-    %li= link_to uk_icon(:cubes) +"用户管理", dashboard_users_path
-    %li= link_to uk_icon(:cubes) +"管理员管理", dashboard_users_path(admin: true)
+    %li= link_to gly_icon(:cubes) +"用户管理", dashboard_users_path
+    %li= link_to gly_icon(:cubes) +"管理员管理", dashboard_users_path(admin: true)
 
-  %li.uk-nav-header 个人设置
+  %li 个人设置
   %li
-    = link_to uk_icon(:key) + "修改密码", ""
+    = link_to gly_icon(:key) + "修改密码", ""
   %li
-    = link_to uk_icon(:gears) + "个人设置", ""
+    = link_to gly_icon(:gears) + "个人设置", ""

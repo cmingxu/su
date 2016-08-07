@@ -11,7 +11,7 @@ require 'mina/rvm'    # for rvm support. (http://rvm.io)
 #   branch       - Branch name to deploy. (needed by mina/git)
 
 set :domain, '114.55.130.152'
-set :deploy_to, '/var/www/foobar.com'
+set :deploy_to, '/var/www/su'
 set :repository, 'git@github.com:cmingxu/su.git'
 set :branch, 'deploy'
 
@@ -22,10 +22,13 @@ set :rvm_path, '/usr/local/rvm/bin/rvm'
 # They will be linked in the 'deploy:link_shared_paths' step.
 set :shared_paths, ['config/database.yml', 'config/secrets.yml', 'log']
 
+set :term_mode, :system
+
 # Optional settings:
-#   set :user, 'foobar'    # Username in the server to SSH to.
+   set :user, 'root'    # Username in the server to SSH to.
 #   set :port, '30000'     # SSH port number.
-#   set :forward_agent, true     # SSH forward_agent.
+   set :forward_agent, true     # SSH forward_agent.
+       set :ssh_options, '-A'
 
 # This task is the environment that is loaded for most commands, such as
 # `mina deploy` or `mina rake`.

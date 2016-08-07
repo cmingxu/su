@@ -8,10 +8,6 @@
     = csrf_meta_tags
   %body
     = render :partial => "widgets/header"
-    .uk-container.uk-container-center.fc-container
-      .fc-sidebar
-        = render :partial => "widgets/sidebar"
-      .fc-main.uk-medium-width-1-1.uk-height-1-1.uk-margin-left
-        = render :partial => "widgets/message"
-        = yield
-    .uk-clearfix
+    = render :partial => "widgets/sidebar"
+    = render :partial => "widgets/message"
+    = yield
