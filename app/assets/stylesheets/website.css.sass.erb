@@ -1,0 +1,37 @@
+@import 'c3'
+@import "uikit"
+@import "uikit/almost-flat"
+
+$fc-main-font-color: #E5E5E5
+$sidebar-width: 160px
+
+body
+  background-image: url(<%= asset_path('ZenBG.png') %>)
+  background-repeat: repeat
+
+.fc-container
+  padding-top: 50px
+  padding-left: $sidebar-width + 30
+  background-color: #fff
+  position: relative
+.fc-sidebar
+  width: $sidebar-width
+  position: absolute
+  left: 0px
+  top: 50px
+  border-right: 1px solid $fc-main-font-color
+.fc-main
+  width: 100%
+  min-height: 1000px
+.fc-nav > li > a
+  color: #777
+
+.ke-container
+  width: 400px!important
+.fc-nav
+  li
+    &:hover
+      a
+        color: white
+      background-color: #777
+
