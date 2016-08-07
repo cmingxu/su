@@ -8,6 +8,7 @@
     "angular-local-storage": "latest",
     "angular-resource": "latest",
     "jquery": "1.11.1",
-    "underscore": "latest"
+    "underscore": "latest",
+    "bootstrap": "latest"
   }
 }

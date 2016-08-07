@@ -1,6 +1,7 @@
 default: &default
   sitename: ""
   title: "建构中国"
+  cn_name: "建构中国"
   domain: ""
   description: ""
 

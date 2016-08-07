@@ -1,4 +1,6 @@
 class SessionController < ApplicationController
+  layout "session"
+  
   def new
     if user_signed_in?
       redirect_to dashboard_path

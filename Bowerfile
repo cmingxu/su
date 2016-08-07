@@ -9,4 +9,5 @@ asset 'angular-local-storage'
 asset 'angular-resource'
 asset 'jquery', '1.11.1'
 asset 'underscore'
-
+ 
+asset 'bootstrap'

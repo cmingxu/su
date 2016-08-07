@@ -18,10 +18,10 @@ class Dashboard::EntitiesController < Dashboard::BaseController
     authorize @entity
     respond_to do |format|
       if @entity.save
-        format.html { redirect_to dashboard_entities_path, notice: "模型上传成功" }
+        redirect_to dashboard_entities_path, notice: "模型上传成功" 
       else
         flash[:notice] = @entity.errors.full_messages.first
-        format.html { render :new }
+        render :new 
       end
     end
   end
