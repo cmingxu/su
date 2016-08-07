@@ -1,0 +1,17 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title= Setting.title
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  %body
+    = render :partial => "widgets/header"
+    .uk-container.uk-container-center.fc-container
+      .fc-sidebar
+        = render :partial => "widgets/sidebar"
+      .fc-main.uk-medium-width-1-1.uk-height-1-1.uk-margin-left
+        = render :partial => "widgets/message"
+        = yield
+    .uk-clearfix

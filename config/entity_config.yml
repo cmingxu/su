@@ -1,0 +1,215 @@
+building_config:
+  name_config:
+    A:
+      _name: "幕墙系统"
+      W: "玻璃幕墙"
+      Q: "干挂系统"
+      H: "虚实组合"
+      G: "幕墙构造"
+    B:
+      _name: "门窗系统"
+      M: "柱子"
+      Q: "墙体"
+      A: "幕墙"
+      W: "门窗"
+      L: "装饰线条"
+    C:
+      _name: "住宅"
+      Q: "墙体"
+      W: "门窗"
+      S: "阳台栏杆"
+      B: "百叶"
+      M: "装饰柱"
+      L: "装饰线条"
+    G:
+      _name: "构建体系"
+      Y: "雨棚"
+
+  material_config:
+    fs: "真石漆"
+    mz: "面砖"
+    sc: "石材"
+    js: "金属"
+    bl: "玻璃"
+    tb: "陶板"
+  attributes_config:
+    "LenX":
+      display: "组件宽度"
+      type: "input"
+      editable: true
+    "LenY":
+      display: "组件进深"
+      type: "input"
+      editable: true
+    "LenZ":
+      display: "组件高度"
+      type: "input"
+      editable: true
+    "RotZ":
+      display: "组件角度"
+      type: "input"
+      editable: true
+    "H":
+      display: "建筑层高"
+      type: "input"
+      editable: true
+    "Hn":
+      display: "建筑层数"
+      type: "input"
+      editable: true
+    "H(%d+)":
+      display: "parseInt($1)层层数"
+      type: "input"
+      editable: true
+    "L":
+      display: "建筑梁高"
+      type: "input"
+      editable: true
+    "Mk":
+      display: "门窗宽度"
+      type: "input"
+      editable: true
+    "Ml":
+      display: "门窗间距"
+      type: "input"
+      editable: true
+    "Mn":
+      display: "门窗数量"
+      type: "input"
+      editable: true
+    "Ms":
+      display: "门窗进深"
+      type: "input"
+      editable: true
+    "Mh":
+      display: "门窗进深"
+      type: "input"
+      editable: true
+    "KZ":
+      display: "左侧控制项"
+      type: "input"
+      editable: true
+    "KZs":
+      display: "左侧计算值"
+      type: "input"
+      editable: false
+    "KY":
+      display: "右侧控制项"
+      type: "input"
+      editable: true
+    "KYs":
+      display: "右侧计算值"
+      type: "input"
+      editable: false
+    "KS":
+      display: "上部控制项"
+      type: "input"
+      editable: true
+    "KSs":
+      display: "上部计算值"
+      type: "input"
+      editable: false
+    "KX":
+      display: "下部控制项"
+      type: "input"
+      editable: true
+    "KXs":
+      display: "下部计算值"
+      type: "input"
+      editable: true
+    "ZK":
+      display: "轴线跨度"
+      type: "input"
+      editable: true
+    "ZZ":
+      display: "柱子直径"
+      type: "input"
+      editable: true
+    "tk":
+      display: "显隐杆件"
+      type: "select"
+      editable: true
+      options:
+        "0": "显示杆件"
+        "1": "隐藏杆件"
+    "tl":
+      display: "栏杆和梁"
+      type: "select"
+      editable: true
+      options:
+        "0": "有梁有栏杆"
+        "1": "有梁无栏杆"
+        "2": "无梁无栏杆"
+    "tp2":
+      display: "拼接方式"
+      type: "select"
+      editable: true
+      options:
+        "1": "拼接方式1"
+        "2": "拼接方式2"
+    "tp3":
+      display: "拼接方式"
+      type: "select"
+      editable: true
+      options:
+        "1": "拼接方式1"
+        "2": "拼接方式2"
+        "3": "拼接方式3"
+    "tp4":
+      display: "拼接方式"
+      type: "select"
+      editable: true
+      options:
+        "1": "拼接方式1"
+        "2": "拼接方式2"
+        "3": "拼接方式3"
+        "4": "拼接方式4"
+    "tp5":
+      display: "拼接方式"
+      type: "select"
+      editable: true
+      options:
+        "1": "拼接方式1"
+        "2": "拼接方式2"
+        "3": "拼接方式3"
+        "4": "拼接方式4"
+        "5": "拼接方式5"
+    "tw2":
+      display: "错位方式"
+      type: "select"
+      editable: true
+      options:
+        "1": "错位方式1"
+        "2": "错位方式2"
+    "tw3":
+      display: "错位方式"
+      type: "select"
+      editable: true
+      options:
+        "1": "错位方式1"
+        "2": "错位方式2"
+        "3": "错位方式3"
+    "tw4":
+      display: "错位方式"
+      type: "select"
+      editable: true
+      options:
+        "1": "错位方式1"
+        "2": "错位方式2"
+        "3": "错位方式3"
+        "4": "错位方式4"
+    "tw5":
+      display: "错位方式"
+      type: "select"
+      editable: true
+      options:
+        "1": "错位方式1"
+        "2": "错位方式2"
+        "3": "错位方式3"
+        "4": "错位方式4"
+        "5": "错位方式5"
+
+
+
+
+

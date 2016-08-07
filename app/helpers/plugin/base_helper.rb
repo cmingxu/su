@@ -1,0 +1,2 @@
+module Plugin::BaseHelper
+end

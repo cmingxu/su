@@ -1,0 +1,247 @@
+#= require jquery/dist/jquery.min
+#= require es5-shim.min
+#= require underscore/underscore-min
+#= require angular/angular.min
+#= require angular-resource/angular-resource
+#= require angular-ui-router/release/angular-ui-router
+#= require angular-cookies/angular-cookies
+#= require angular-rails-templates
+#= require_tree ../templates
+
+
+building = angular.module "building", ['ngResource', 'ui.router', 'templates', 'ngCookies' ]
+
+building.config ['$httpProvider', ($httpProvider) ->
+  $httpProvider.defaults.headers.common['Content-Type'] = 'application/json'
+  $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
+]
+
+building.config ['$stateProvider', '$urlRouterProvider', ($stateProvider, $urlRouterProvider) ->
+  $urlRouterProvider.otherwise '/local'
+  $stateProvider.state 'attributes',
+    url: "/attributes"
+    controller: 'Attributes'
+    templateUrl: '/assets/plugin/attributes.html'
+
+  $stateProvider.state 'local',
+    url: "/local"
+    controller: 'Local'
+    templateUrl: '/assets/plugin/local.html'
+
+  $stateProvider.state 'system',
+    url: "/system"
+    controller: 'System'
+    templateUrl: '<%= asset_path 'plugin/system.html' %>'
+
+  $stateProvider.state 'remote',
+    url: "/remote"
+    controller: 'Remote'
+    templateUrl: '<%= asset_path 'plugin/remote.html' %>'
+
+  $stateProvider.state 'login',
+    url: "/login"
+    controller: 'Login'
+    templateUrl: '<%= asset_path 'plugin/login.html' %>'
+
+  $stateProvider.state 'register',
+    url: "/register"
+    controller: 'Register'
+    templateUrl: '<%= asset_path 'plugin/register.html' %>'
+]
+
+building.directive 'su-number-format', ['$filter', ($filter) ->
+  require: 'ngModel'
+  link: (scope, elm, attrs, ctrl) ->
+    formatter = (value) ->
+      parseFloat(value).toFixed(2)
+    parser = () ->
+      ctrl.$modelValue
+    ctrl.$formatters.push formatter
+    ctrl.$parser.push parse
+]
+
+building.factory "Entity", ($resource) ->
+  $resource("/api/entities/:id", {id: '@id'}, {
+    index:
+      method: 'GET'
+      isArray: true
+    mine:
+      url: "/api/entities/mine"
+      method: 'GET'
+      isArray: true
+    remove_enetity:
+      url: "/api/entities/:uuid"
+      method: 'DELETE'
+  })
+
+building.constant 'CURRENT_USER', 'currentUser'
+
+building.factory 'CurrentUser', ['$cookies', 'CURRENT_USER', ($cookies, CURRENT_USER) ->
+    currentUser = {}
+
+    currentUser.isLogin      = -> $cookies.get('auth_token')?
+    currentUser.hasAuthToken = -> $cookies.get('auth_token')?
+    currentUser.authToken    = -> $cookies.get('auth_token')
+
+    currentUser
+  ]
+
+building.controller "Attributes", ['$scope', 'CurrentUser', '$cookies', ($scope, CurrentUser, $cookies) ->
+  $scope.attributes_display = ()->
+    keys_need_turn_into_cm = ["lenx", "leny", "lenz"]
+    inches_to_cm_transformer = (inches) ->
+      Math.round(inches * 2.54)
+
+    cm_to_inches_transformer = (cm) ->
+      Math.round(cm / 2.54)
+
+    $scope.displayable_attributes = []
+    displayable_attr_keys = _.intersection (k.toLowerCase() for k of $scope.current_entity.dynamic_attributes),  (k.toLowerCase() for k of attributes_config)
+    $scope.change = (k, v)->
+      v = if keys_need_turn_into_cm.indexOf(k) >= 0 then cm_to_inches_transformer(v) else v
+      $scope.bridge 'update_attribute', k + ":" + v
+
+    for k in displayable_attr_keys
+      value  = if angular.isNumber($scope.current_entity.dynamic_attributes[k]) then $scope.current_entity.dynamic_attributes[k].toFixed(2) else $scope.current_entity.dynamic_attributes[k]
+      value = if keys_need_turn_into_cm.indexOf(k) >= 0 then inches_to_cm_transformer(value) else value
+      $scope.displayable_attributes.push(
+        key: k,
+        value: value,
+        display: attributes_config[k]["display"],
+        type: attributes_config[k]["type"],
+        editable: attributes_config[k]["editable"],
+        options:
+          attributes_config[k]["options"]
+      )
+  $scope.attributes_display()
+
+
+]
+
+building.controller "Local", ['$scope', 'CurrentUser', '$cookies', ($scope, CurrentUser, $cookies) ->
+  $scope.replace_by_name = (name)->
+    $scope.bridge "replace_by_name", name
+
+  $scope.c = ->
+    $cookies.getAll()
+
+  $scope.upload_local_model = (model) ->
+    $scope.bridge "upload_local_model", model + "||" + CurrentUser.authToken()
+]
+
+building.controller "Remote", ['$scope', '$http', '$interval', "Entity", ($scope, $http, $interval, Entity) ->
+  $scope.current_entity = {}
+  $scope.remote_models = {}
+
+  $scope.delete_remote = (model_name, uuid) ->
+    if confirm("永久删除模型" + model_name + "么?" + uuid)
+      Entity.remove_enetity {uuid: uuid}, (data) ->
+        $scope.remote_models = data
+
+  Entity.mine (data) ->
+    $scope.remote_models = data
+
+]
+
+building.controller "Login", ['$scope', '$http', ($scope, $http) ->
+  $scope.current_user = {}
+  $scope.login = ()->
+    if !$scope.current_user.email or !$scope.current_user.email.match(/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i)
+      alert "邮箱格式不正确"
+      return
+    if !$scope.current_user.password
+      alert "密码不正确"
+      return
+
+    $http.post("/api/users/login", {user: $scope.current_user}).success (response) ->
+      if response.status == "fail"
+        alert response.message
+      else
+        alert response.headers
+        window.location.hash = "/local"
+]
+
+building.controller "Register", ['$scope', '$http', ($scope, $http) ->
+  $scope.current_user = {}
+  $scope.register = ()->
+    if !$scope.current_user.email or !$scope.current_user.email.match(/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i)
+      alert "邮箱格式不正确"
+      return
+    if !$scope.current_user.password
+      alert "密码不正确"
+      return
+    if $scope.current_user.password != $scope.current_user.password_confirmation
+      alert "两次密码不一致"
+      return
+
+    $http.post("/api/users", {user: $scope.current_user}).success (response, status, headers) ->
+      if response.status == "fail"
+        alert response.message
+      else
+        alert response
+        alert status
+        alert headers
+        window.location.hash = "/local"
+
+]
+
+building.controller "System", ['$scope', '$http', '$interval', "Entity", ($scope, $http, $interval, Entity) ->
+  $scope.current_entity = {}
+  $scope.system_models = {}
+  Entity.index (data) ->
+    $scope.system_models = data
+
+]
+
+building.controller "Main", ['$scope', '$http', '$timeout', "Entity", "CurrentUser", ($scope, $http, $timeout, Entity, CurrentUser) ->
+  $scope.CurrentUser = CurrentUser
+  $scope.current_entity = {}
+  $scope.local_models = []
+
+  $scope.$watch 'current_entity', (oldV, newV) ->
+    $scope.goto_page "attributes"
+
+
+  $scope.readable_name = (code)->
+    return "Edge" if code == "Edge"
+    code = code.split("")
+    f = code[0]
+    s = code[1]
+    n = code[4..8].join("")
+    return name_config[f][s] + n if name_config[f][s]
+    return code
+
+
+  $scope.goto_page = (page) ->
+    window.location.hash = page
+
+  $scope.bridge = (action, param) ->
+    window.location.href = "skp:" + action + "@" + param
+
+  $scope.current_component_definition_name_change = () ->
+    $scope.bridge "current_component_definition_name_change", $scope.current_entity.name
+
+  $scope.remove_local_model = (model_name) ->
+    if confirm("永久删除模型" + model_name + "么?")
+      $scope.bridge "remove_local_component_definition", model_name
+
+  $scope.download_from_system = (skp_file) ->
+    $scope.bridge "download_from_system", skp_file
+    window.location.hash = "/local"
+
+  $scope.download_from_remote = (skp_file) ->
+    $scope.bridge "download_from_remote", skp_file
+    window.location.hash = "/local"
+
+  $scope.replace_by_name = (model_name) ->
+    $scope.bridge "replace_by_name", model_name
+
+  $scope.sign_out = ->
+    $http.delete("/api/users/sign_out").success (response) ->
+      window.location.hash = "/login"
+
+  $timeout ()->
+    $scope.bridge 'initialization'
+    , 200
+]
+

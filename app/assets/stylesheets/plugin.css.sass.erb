@@ -1,0 +1,118 @@
+@import "uikit"
+
+$highlight-color: #3f61ab
+$border-color: gray
+
+.uk-container-center, .uk-container
+  padding: 0px
+
+.uk-grid
+  margin: 0px
+
+.uk-form
+  input[type=text]
+    border-radius: 0px!important
+.fc-name-field
+  width: 100%
+  font-weight: 750
+  font-size: 1.2em
+.uk-button
+  border-radius: 0px
+
+.su-container
+  height: 100%
+
+#user_profile, #model_profile
+  background-color: $highlight-color
+  padding: 10px 5px
+#user_profile
+  width: 100%
+  position: fixed
+  bottom: 0px
+
+.uk-tab>li>a 
+  padding: 8px 20px 8px 20px
+  border-radius: 0px!important
+
+
+.su_models_header
+  position: relative
+
+  #search_area
+    position: absolute
+    top: 8px 
+    right: 0px
+    height: 16px
+    border: 1px solid $border-color
+    border-radius: 15px
+    padding: 3px 10px
+    width: 100px
+    input
+      border: none
+      width: 70px
+      height: 8px
+      line-height: 8px
+
+.models
+  .model_item
+    height: 55px
+    background: linear-gradient(white, #bbd4f3)
+    background-image: url('<%= asset_path("bg.png") %>')
+    padding-left: 80px
+    position: relative
+    cursor: pointer
+    .model_icon
+      position: absolute
+      top: 3px
+      left: 3px
+    .model_details
+      .model_name
+        font-weight: 700
+        font-size: 1.2em
+        padding-top: 3px
+      .folder_name
+        font-weight: 400
+        font-size: .6em
+        background-color: blue
+        padding: 2px 4px
+        border-radius: 3px
+        color: white
+      .model_created_time
+        position: absolute
+        right: 10px
+        top: 3px
+        font-style: italic
+      .model_buttons
+        display: none
+        padding-right: 10px
+        padding-top: 5px
+        .uk-button
+          padding: 0px 10px
+          line-height: 16px!important
+          height: 16px!important
+          min-height: 22px
+
+      &:hover
+        .model_buttons
+          display: block
+
+.login_page,.register_page
+  margin: 20px
+  padding-top: 80px
+  .uk-form-row
+    padding-left: 20px
+    padding-right: 20px
+
+
+#ad
+  overflow-x: hidden
+  position: fixed
+  background-color: white
+  width: 100%
+  bottom: 50px
+  .ad-item
+    float: left
+
+.su_attributes
+  td
+    padding: 1px

@@ -1,0 +1,42 @@
+.uk-width-medium-1-1.su_models_header
+  %ul.uk-tab{'data-uk-tab' => '{connect: "#tabs"}'}
+    %li.uk-active
+      %a 属性
+    %li
+      %a{'ui-sref' => 'local'} 本地
+    %li
+      %a{'ui-sref' => 'remote'} 远程
+    %li
+      %a{'ui-sref' => 'system'} 构建中国
+  #search_area.uk-margin-right.uk-medium-widht-1-3
+    %input.uk-form-small{name: 'search'}
+    %span
+      %i.uk-icon-user
+
+  %ul#tabs.uk-switcher.uk-margin
+    %li.uk-active
+      .models.su_attributes
+        %div{"ng-show" => "current_entity.type=='component_definition'"}
+          %table.uk-table.uk-table-hover.uk-table.stripped
+            %thead
+              %tr
+                %th.uk-text-center 属性
+                %th.uk-text-center 值
+
+            %tbody
+              %tr{"ng-repeat" => "attr in displayable_attributes"}
+                %td.uk-text-center {{attr.display}}
+                %td.uk-text-center
+                  %div.uk-width-1-1{"ng-if" => "attr.type == 'input'"}
+                    %input.uk-width-1-1{"ng-model" => "attr.value", "ng-disabled" => "!attr.editable", "ng-model-onblur" => true, "ng-change" => "change(attr.key, attr.value)", "ng-number-format" => ""}
+                  %div{"ng-if" => "attr.type == 'select'"}
+                    %select{"ng-model" => "attr.value", "ng-options" => "k as v for (k, v) in attr.options", "ng-change" => "change(attr.key, attr.value)"}
+                    -#%select
+                      -#%option{"ng-repeat" => "option in attr.options", "ng-model" => "option", "ng-disabled" => "!attr.editable", "ng-change" => "change(attr.key, attr.value)"} {{option}}
+
+        %div{"ng-hide" => "current_entity.type=='component_definition'"}
+          .uk-alert.uk-alert-success.uk-text-center 请选择一个组件
+
+
+    %li
+    %li

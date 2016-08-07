@@ -1,0 +1,40 @@
+- if params[:admin]
+  .uk-grid
+    .uk-width-1-1
+      = link_to "新管理员", new_dashboard_user_path(admin: true), {"class" => 'uk-button uk-float-right uk-button-primary'}
+
+.uk-grid
+  %table.uk-table.uk-table-hover.uk-table-stripped
+    %thead
+      %th ID
+      %th Email
+      %th 可见？
+      %th 账户类型
+      %th
+    %tbody
+      - @users.each do |u|
+        %tr
+          %td= link_to u.id, edit_dashboard_user_path(u)
+          %td
+            = link_to u.email, edit_dashboard_user_path(u)
+          %td
+            = u.visible? ? "是" : "否"
+            = check_box_tag "visible", u.visible, u.visible, class: 'toggle_visible', data: { user_id: u.id }
+          %td
+            - u.roles_in_words.map do |r|
+              .uk-badge= r
+
+  = paginate @users
+
+
+:javascript
+  $(document).ready(function() { $('.toggle_visible').change(
+    function(){
+      $.ajax({
+        url: "/dashboard/users/" + $(this).data('user-id') + "/toggle_visible",
+        method: 'PATCH'
+      })
+    }
+  );});
+  
+

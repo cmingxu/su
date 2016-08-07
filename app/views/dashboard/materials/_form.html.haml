@@ -1,0 +1,23 @@
+= form_for [:dashboard, @vendor, @material], class: 'uk-form', multipart: true do |f|
+  %table.uk-table.uk-table-stripped.uk-table-hover
+    %caption 材料
+    %tr
+      %td 名称
+      %td= f.text_field :name, class: 'uk-from-large'
+
+    %tr
+      %td 编号
+      %td= f.text_field :code
+
+    %tr
+      %td 价格
+      %td= f.number_field :price
+
+    %tr
+      %td 图标
+      %td= f.file_field :icon
+
+    %tr
+      %td.uk-text-right{colspan: 2}
+        = f.submit f.object.persisted? ? "修改" : "增加", class: 'uk-button'
+

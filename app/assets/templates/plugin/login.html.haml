@@ -1,0 +1,16 @@
+%ng-form.uk-form.uk-width-1-1.uk-margin.login_page
+  %fieldset
+    %legend
+    .uk-form-row
+      .uk-width-1-3.uk-float-left 邮箱
+      %input.uk-width-2-3{"ng-model" => "current_user.email", "placeholder" => "邮箱"}
+
+    .uk-form-row
+      .uk-width-1-3.uk-float-left 密码
+      %input.uk-width-2-3{"ng-model" => "current_user.password", "placeholder" => "密码", "type" => "password"}
+    .uk-form-row
+      %button.uk-button.uk-button-success.uk-width-3-3{"type" => "submit", "ng-click" => "login()"} 登录
+
+
+
+

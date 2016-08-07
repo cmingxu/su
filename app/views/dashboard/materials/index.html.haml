@@ -1,0 +1,23 @@
+
+%table.uk-table.uk-table-hover.uk-table-stripped
+  %thead
+    %th ID
+    %th 编号
+    %th 名称
+    %th 图标
+    %th 价格
+    %th 材料商
+    %th
+    %th
+  %tbody
+    - @materials.each do |m|
+      %tr
+        %th= m.id
+        %th= m.code
+        %th= m.name
+        %th= image_tag m.icon.thumb.url
+        %th= m.price
+        %th= m.vendor.name
+        %th
+          = link_to "修改", edit_dashboard_material_path(m)
+          = link_to "删除", dashboard_material_path(m), method: :delete, data: { confirm: "确定要删除此材料？" }

@@ -1,0 +1,56 @@
+!!!
+%html
+  %head
+    %meta{name: "viewport", content: "width=device-width, initial-scale=1"}
+    :coffee
+      window.name_config = #{EntityConfig.name_config.to_json}
+      window.material_config = #{EntityConfig.material_config.to_json}
+      window.attributes_config = #{EntityConfig.attributes_config.to_json}
+
+    = javascript_include_tag 'plugin'
+    = stylesheet_link_tag 'plugin'
+    = csrf_meta_tag
+
+  %body{'ng-app' => 'building'}
+    .uk-container.uk-container-center.su-container{'ng-controller' => 'Main'}
+      .data-channel
+        %input#data_transfer_channel{type: 'hidden'}
+
+      .uk-grid#model_profile
+        .uk-width-1-3{"ng-show" => "current_entity.type"}
+          %img{'ng-src' => "{{current_entity.thumbnail_src}}", 'width' => 123, 'class' => "data-uk-margin"}
+        .uk-width-2-3{"ng-show" => "current_entity.type"}
+          = form_tag "", method: "post", class: "uk-form" do
+            %input.uk-form-small.uk-margin-bottom.uk-float-right.fc-name-field{'ng-model' => "readable_name(current_entity.name)", "ng-editable" => false}
+            .uk-clearfix
+          #action_bar
+            %button.uk-button.uk-button-small.uk-primary.uk-float-right.uk-margin-right{'ng-click' => "bridge('save_current_component_definition')", "ng-disabled" => "{{!current_entity.name && current_entity.type == 'component_definition'}}"} 保存
+            %button.uk-button.uk-button-small.uk-primary.uk-float-right.uk-margin-right{'ng-click' => "goto_page('/attributes')", "ng-disabled" => "{{current_entity.type == 'component_definition'}}"} 属性
+        .uk-width-3-3{"ng-show" => "!current_entity.type"}
+          .uk-alert.uk-alert-success.uk-text-center 请选择一个模型
+
+      #models
+        %div{"ui-view" => true}
+
+      -##ad
+        -#.uk-panel
+          -#.ad-item
+            -#= image_tag asset_path('mianzhuan.jpg'), height: 60, width: 60, class: 'uk-border-rounded'
+          -#.ad-item
+            -#= image_tag asset_path('shicai.jpg'), height: 60, width: 60, class: 'uk-border-rounded'
+          -#.ad-item
+            -#= image_tag asset_path('mianzhuan.jpg'), height: 60, width: 60, class: 'uk-border-rounded'
+          -#.ad-item
+            -#= image_tag asset_path('shicai.jpg'), height: 60, width: 60, class: 'uk-border-rounded'
+          -#.ad-item
+            -#= image_tag asset_path('mianzhuan.jpg'), height: 60, width: 60, class: 'uk-border-rounded'
+
+      #user_profile.uk-container
+        %div{"ng-show" => "!CurrentUser.isLogin()"}
+          %button.uk-button.uk-button-primary.uk-float-right.uk-margin-right{"ui-sref" => "register"} 我要注册
+          %button.uk-button.uk-button-primary.uk-float-right.uk-margin-right{"ui-sref" => "login"} 我要登录
+
+        %div{"ng-show" => "CurrentUser.isLogin()"}
+          %button.uk-button.uk-button-primary{"ng-click" => "sign_out()"} 退出
+
+

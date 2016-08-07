@@ -1,0 +1,12 @@
+# A sample Bowerfile
+# Check out https://github.com/42dev/bower-rails#ruby-dsl-configuration for more options
+
+asset 'moment'
+asset 'angularjs-ie8-build'
+asset 'angular-ui-router'
+asset 'angular-cookies'
+asset 'angular-local-storage'
+asset 'angular-resource'
+asset 'jquery', '1.11.1'
+asset 'underscore'
+

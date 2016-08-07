@@ -1,0 +1,13 @@
+{
+  "name": "dsl-generated dependencies",
+  "dependencies": {
+    "moment": "latest",
+    "angularjs-ie8-build": "latest",
+    "angular-ui-router": "latest",
+    "angular-cookies": "latest",
+    "angular-local-storage": "latest",
+    "angular-resource": "latest",
+    "jquery": "1.11.1",
+    "underscore": "latest"
+  }
+}
