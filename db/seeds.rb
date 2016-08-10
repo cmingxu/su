@@ -15,7 +15,6 @@ User.create!(email: "user@user.com", password: "user@user", roles: ["user"])
 end 
 
 
-suckr = ImageSuckr::GoogleSuckr.new
 
 100.times do
   Entity.create do |e|
@@ -23,6 +22,5 @@ suckr = ImageSuckr::GoogleSuckr.new
     e.name = Faker::Lorem.word
     e.user_id  = owner.id
     e.description = Faker::Lorem.paragraphs
-    e.remote_icon_url = suckr.get_image_url({"q" => "car"})
   end
 end
