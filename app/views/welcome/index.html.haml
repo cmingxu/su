@@ -1,6 +1,5 @@
 .container
   - @entities.each do |e|
-    = image_tag e.icon.try(:url)
     %p= e.description
 
 
