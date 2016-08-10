@@ -21,7 +21,7 @@ class Entity < ActiveRecord::Base
   belongs_to :user
   belongs_to :folder
 
-  validates :skp_file, :name, presence: true
+  validates :name, presence: true
   validates :name, uniqueness: { scope: :user_id }
   validates :name, uniqueness: { scope: :folder_id }
   #validates :skp_file, presence: true
