@@ -10,3 +10,4 @@ Rails.application.config.assets.version = '1.0'
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 Rails.application.config.assets.precompile += ["plugin.js", "plugin.css", "session.js", "session.css"]
 Rails.application.config.assets.precompile += ["website.js", "website.css"]
+Rails.application.config.assets.precompile += ["dashboard.js", "dashboard.css"]

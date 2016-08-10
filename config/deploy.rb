@@ -16,7 +16,7 @@ set :repository, 'git@github.com:cmingxu/su.git'
 set :branch, 'master'
 
 # For system-wide RVM install.
-set :rvm_path, '/usr/local/rvm/scripts/rvm'
+set :rvm_path, '/home/ubuntu/.rvm/bin/rvm'
 
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
@@ -31,7 +31,7 @@ set :ssh_options, '-A'
 # This task is the environment that is loaded for most commands, such as
 # `mina deploy` or `mina rake`.
 task :environment do
-  invoke :'rvm:use[ruby-2.2.2@default]'
+  invoke :'rvm:use[ruby-2.3.1@default]'
 end
 
 # Put any custom mkdir's in here for when `mina setup` is ran.

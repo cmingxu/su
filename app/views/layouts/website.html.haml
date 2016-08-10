@@ -9,27 +9,9 @@
     = csrf_meta_tags
   %body
     = render :partial => "widgets/header"
-    .uk-container.uk-container-center.uk-margin-bottom
-      %nav.uk-navbar
-        = link_to "Brand", "/", class: "uk-navbar-brand uk-hidden-small"
-        %ul.uk-navbar-nav.uk-hidden-small
-          %li
-            = link_to "首页", root_path, class: "active"
-          - Folder.all.each do |folder|
-            %li
-              = link_to folder.name, folder_path(folder)
-      = link_to "", "#offcanvas", "class" => "uk-navbar-toggle uk-visible-small", "data-uk-offcanvas" => true
-      .uk-navbar-brand.uk-navbar-center.uk-visible-small
+    - Folder.all.each do |folder|
+      %li
+        = link_to folder.name, folder_path(folder)
 
     = yield
-
-    #offcanvas.uk-offcanvas
-      .uk-offcanvas-bar
-        %ul.uk-nav.uk-nav-offcanvas
-          %li
-            = link_to "首页", root_path, class: "active"
-          - Folder.all.each do |folder|
-            %li
-              = link_to folder.name, folder_path(folder)
-
 
