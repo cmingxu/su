@@ -24,7 +24,7 @@ class Entity < ActiveRecord::Base
   validates :skp_file, :name, presence: true
   validates :name, uniqueness: { scope: :user_id }
   validates :name, uniqueness: { scope: :folder_id }
-  validates :skp_file, presence: true
+  #validates :skp_file, presence: true
 
   scope :site_level, -> { where(is_system: true) }
   scope :visible, -> { where(visible: true) }

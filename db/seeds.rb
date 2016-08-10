@@ -18,10 +18,12 @@ end
 
 
 100.times do
-  Entity.create do |e|
+  x = Entity.new do |e|
     e.folder_id = Folder.all.shuffle.first.id
     e.name = Faker::Lorem.word
-    e.user_id  = owner.id
+    e.user_id  = o.id
     e.description = Faker::Lorem.paragraphs
   end
+  x.save
+  puts x.errors
 end
