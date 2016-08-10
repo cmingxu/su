@@ -1,25 +1,20 @@
-.uk-grid
-  .uk-width-1-1
-    = link_to "新增材料商", new_dashboard_vendor_path, class: 'uk-button uk-float-right uk-button-primary'
+= link_to "新增材料商", new_dashboard_vendor_path, class: 'btn btn-primary btn-default pull-right'
 
-%hr
-
-.uk-grid
-  %table.uk-table.uk-table-hover.uk-table-stripped
-    %thead
-      %th ID
-      %th 名称
-      %th 电话
-      %th 地址
-      %th 材料数
-      %th
-    %tbody
-      - @vendors.each do |v|
-        %tr
-          %th= link_to v.id, edit_dashboard_vendor_path(v)
-          %th= link_to v.name, edit_dashboard_vendor_path(v)
-          %th= v.tel
-          %th= v.address
-          %th= v.materials.count
-          %th
-            = link_to "新增材料", new_dashboard_vendor_material_path(v)
+%table.table
+  %thead
+    %th ID
+    %th 名称
+    %th 电话
+    %th 地址
+    %th 材料数
+    %th
+  %tbody
+    - @vendors.each do |v|
+      %tr
+        %th= link_to v.id, edit_dashboard_vendor_path(v)
+        %th= link_to v.name, edit_dashboard_vendor_path(v)
+        %th= v.tel
+        %th= v.address
+        %th= v.materials.count
+        %th
+          = link_to "新增材料", new_dashboard_vendor_material_path(v)

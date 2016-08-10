@@ -1,35 +1,30 @@
-.uk-grid
-  .uk-width-1-1
-    = link_to "上传模型", '#modal_id', {"class" => 'uk-button uk-float-right uk-button-primary',"data-uk-modal" => true}
+= link_to "上传模型", '#modal_id', {"class" => 'uk-button uk-float-right uk-button-primary',"data-uk-modal" => true}
 
-%hr
-#modal_id.uk-modal{"data-remote-url" => new_dashboard_entity_path}
-  .uk-modal-dialog#modal_content
-    = render :partial => "form"
+#modal_id{"data-remote-url" => new_dashboard_entity_path}
+  = render :partial => "form"
 
-.uk-grid
-  %table.uk-table.uk-table-hover.uk-table-stripped
-    %thead
-      %th ID
-      %th 文件夹
-      %th 模型名
-      %th 上传时间
-      %th 是否可见
-      %th
-    %tbody
-      - @entities.each do |v|
-        %tr
-          %td= link_to v.id, edit_dashboard_entity_path(v)
-          %td= v.folder.try(:name)
-          %td= v.name
-          %td= v.created_at.to_s(:short)
-          %td
-            = check_box_tag "visible", v.visible, v.visible, class: 'toggle_visible', data: { entity_id: v.id }
-          %td
-            = link_to "修改", edit_dashboard_entity_path(v)
-            = link_to "删除", dashboard_entity_path(v), method: :delete, data: { confirm: "删除此模型？" }
+%table.table
+  %thead
+    %th ID
+    %th 文件夹
+    %th 模型名
+    %th 上传时间
+    %th 是否可见
+    %th
+  %tbody
+    - @entities.each do |v|
+      %tr
+        %td= link_to v.id, edit_dashboard_entity_path(v)
+        %td= v.folder.try(:name)
+        %td= v.name
+        %td= v.created_at.to_s(:short)
+        %td
+          = check_box_tag "visible", v.visible, v.visible, class: 'toggle_visible', data: { entity_id: v.id }
+        %td
+          = link_to "修改", edit_dashboard_entity_path(v)
+          = link_to "删除", dashboard_entity_path(v), method: :delete, data: { confirm: "删除此模型？" }
 
-  = paginate @entities
+= paginate @entities
 
 
 :javascript

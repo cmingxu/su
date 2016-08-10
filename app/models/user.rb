@@ -62,10 +62,10 @@ class User < ActiveRecord::Base
   end
 
   def password_valid?(pass)
-    self.encrypted_password == encryt_password(pass)
+    self.encrypted_password == encrypt_password(pass)
   end
 
-  def encryt_password(pass)
+  def encrypt_password(pass)
     Digest::SHA1.hexdigest(SALT + pass)
   end
 end

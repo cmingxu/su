@@ -15,9 +15,4 @@
 //= require turbolinks
 //= require c3
 //= require angular
-//= require angular-material
-//= require angular-animate
-//= require angular-material-icons
-//= require angular-aria
-//= require_tree ./dashboard
-
+//= require bootstrap/dist/js/bootstrap.min

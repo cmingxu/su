@@ -1,5 +1,5 @@
 = form_for [:dashboard, @entity], class: 'uk-form', multipart: true  do |f|
-  %table.uk-table.uk-table-stripped.uk-table-hover
+  %table.table
     %caption 模型
     %tr
       %td 文件夹
@@ -18,6 +18,6 @@
         = f.file_field :skp_file
 
     %tr
-      %td.uk-text-right{colspan: 2}
-        = f.submit f.object.persisted? ? "修改" : "增加", class: 'uk-button'
+      %td
+        = f.submit f.object.persisted? ? "修改" : "增加", class: 'btn.btn-primary.btn-default'
 

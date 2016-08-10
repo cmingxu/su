@@ -1,5 +1,5 @@
 = form_for [:dashboard, @user], class: 'uk-form', multipart: true  do |f|
-  %table.uk-table.uk-table-hover
+  %table.table
     %caption 管理员
     %tr
       %td Email
@@ -11,7 +11,7 @@
       %td= f.text_field :password
 
     %tr
-      %td.uk-text-right{colspan: 2}
+      %td
         = f.submit f.object.persisted? ? "修改" : "增加", class: 'uk-button'
 
 

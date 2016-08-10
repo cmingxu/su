@@ -1,0 +1,48 @@
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{name: "viewport", content: "width=device-width, initial-scale=1"}
+    %title= Setting.cn_name
+    = stylesheet_link_tag    'dashboard', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'dashboard', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+
+  %body
+    %nav.nav.navbar-inverse.navbar-fixed-top
+      .container-fluid
+        .navbar-header
+          = link_to Setting.cn_name, root_path, class: 'navbar-brand'
+
+        %ul.navbar-nav.nav.pull-right
+          %li.active
+            = link_to "foobar", root_path
+          %li= link_to "foobar", root_path
+          %li= link_to "foobar", root_path
+
+    .container-fluid.main_content
+      .row
+        .col-md-2.sidebar
+          %ul.nav.nav-sidebar
+            %li.active
+              = link_to "模型", dashboard_entities_path
+            %li
+              = link_to "材料", dashboard_materials_path
+            %li
+              = link_to "用户", dashboard_users_path
+            %li
+              = link_to "材料商", dashboard_vendors_path
+
+          %ul.nav.nav-sidebar
+            %li.active
+              = link_to "Reports", root_path
+            %li
+              = link_to "Reports", root_path
+            %li
+              = link_to "Reports", root_path
+            %li
+              = link_to "Reports", root_path
+        .col-md-10.col-md-offset-2
+          = yield
+
+
+
