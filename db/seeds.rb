@@ -6,9 +6,10 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-User.create!(email: "cming.xu@gmail.com", password: "cming.xu@gmail.com", roles: ["admin"])
-owner = User.create!(email: "siteowner@siteowner.com", password: "siteowner@siteowner", roles: ["siteowner", "user"])
-User.create!(email: "user@user.com", password: "user@user", roles: ["user"])
+User.new(email: "cming.xu@gmail.com", password: "cming.xu@gmail.com", roles: ["admin"]).save
+owner = User.new(email: "siteowner@siteowner.com", password: "siteowner@siteowner", roles: ["siteowner", "user"])
+owner.save
+User.new(email: "user@user.com", password: "user@user", roles: ["user"]).save
 
 %w(门窗 衣橱 厨房 卫生间 卧室 沙发 电视柜).each do |f|
   Folder.create name: f, user_id: owner.id
