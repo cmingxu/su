@@ -2,8 +2,6 @@
 = form_tag(session_path, class: "form login") do |f|
   = email_field_tag :email, params[:email], autofocus: true, class: "col-md-12", placeholder: "请输入邮箱"
   = password_field_tag :password,params[:password], autocomplete: "off", class: "col-md-12", placeholder: "请输入密码"
-  = text_field_tag :captcha, "", class: "col-md-6", placeholder: "右侧验证码"
-  = show_simple_captcha label: "刷新"
 
   = submit_tag "登录", class: "btn btn-success btn-sm"
   %p.text-right
