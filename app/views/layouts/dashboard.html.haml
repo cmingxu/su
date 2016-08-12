@@ -14,35 +14,27 @@
           = link_to Setting.cn_name, root_path, class: 'navbar-brand'
 
         %ul.navbar-nav.nav.pull-right
-          %li.active
-            = link_to "foobar", root_path
-          %li= link_to "foobar", root_path
-          %li= link_to "foobar", root_path
+          %li= link_to current_user.identity, dashboard_user_path(current_user)
+          %li= link_to "退出", session_path, method: :delete
 
     .container-fluid.main_content
       .row
         .col-md-2.sidebar
           %ul.nav.nav-sidebar
             %li.active
-              = link_to "模型", dashboard_entities_path
+              = link_to "系统模型", dashboard_entities_path
             %li
-              = link_to "材料", dashboard_materials_path
+              = link_to "模型分类", dashboard_categories_path
             %li
-              = link_to "用户", dashboard_users_path
+              = link_to "材料列表", dashboard_materials_path
+            %li
+              = link_to "用户列表", dashboard_users_path
             %li
               = link_to "材料商", dashboard_vendors_path
 
           %ul.nav.nav-sidebar
             %li.active
-              = link_to "Reports", root_path
-            %li
-              = link_to "Reports", root_path
-            %li
-              = link_to "Reports", root_path
-            %li
-              = link_to "Reports", root_path
-        .col-md-10.col-md-offset-2
+
+        .col-md-10.col-md-offset-2.main_content
+          = render :partial => "layouts/message"
           = yield
-
-
-

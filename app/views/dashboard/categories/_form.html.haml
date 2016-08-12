@@ -1,0 +1,5 @@
+= simple_form_for [:dashboard, @category], class: 'form form-horizontal', multipart: true  do |f|
+  = f.select :parent_id, nested_set_options(Category, @category) {|i| "#{'-' * i.level} #{i.name}" } ,label: "上级分类"
+  = f.input :name, label: "分类名称"
+  = f.submit f.object.persisted? ? "修改" : "增加", class: 'btn.btn-primary.btn-default'
+

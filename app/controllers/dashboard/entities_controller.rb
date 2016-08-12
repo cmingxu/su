@@ -16,13 +16,11 @@ class Dashboard::EntitiesController < Dashboard::BaseController
     @entity.visible = true
 
     authorize @entity
-    respond_to do |format|
-      if @entity.save
-        redirect_to dashboard_entities_path, notice: "模型上传成功" 
-      else
-        flash[:notice] = @entity.errors.full_messages.first
-        render :new 
-      end
+    if @entity.save
+      redirect_to dashboard_entities_path, notice: "模型上传成功" 
+    else
+      flash[:notice] = @entity.errors.full_messages.first
+      render :new
     end
   end
 

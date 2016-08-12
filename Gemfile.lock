@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/ctran/annotate_models.git
+  revision: c952306966c9bae4438e4d40351561af3d8005c0
+  specs:
+    annotate (2.7.0)
+      activerecord (>= 3.2, < 6.0)
+      rake (>= 10.4, < 12.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -46,6 +54,8 @@ GEM
       sprockets (~> 3.0)
       tilt
     arel (7.1.1)
+    awesome_nested_set (3.1.1)
+      activerecord (>= 4.0.0, < 5.1)
     awesome_print (1.7.0)
     bcrypt (3.1.11)
     better_errors (2.1.1)
@@ -312,6 +322,8 @@ DEPENDENCIES
   aasm
   acts_as_list
   angular-rails-templates
+  annotate!
+  awesome_nested_set
   awesome_print
   better_errors
   bower-rails

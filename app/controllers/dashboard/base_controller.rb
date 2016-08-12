@@ -3,7 +3,6 @@ class Dashboard::BaseController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @folders = current_user.folders
-    @latest_users = User.order('id DESC').page 1
+    redirect_to dashboard_entities_path
   end
 end

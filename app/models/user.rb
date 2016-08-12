@@ -18,6 +18,9 @@
 #  uuid                   :string(255)
 #  roles                  :string(255)
 #  visible                :boolean          default(TRUE)
+#  auth_token             :string(255)
+#  name                   :string(255)
+#  mobile                 :string(255)
 #
 
 class User < ActiveRecord::Base
@@ -30,7 +33,6 @@ class User < ActiveRecord::Base
 
   attr_accessor :password
 
-  has_many :folders
   has_many :entities
 
   scope :normal_user, -> { where( "roles LIKE '%user%'" ) }
@@ -45,7 +47,7 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    self.roles =~ Regexp.new('admin')
+    true
   end
 
   def make_admin!
@@ -67,6 +69,10 @@ class User < ActiveRecord::Base
 
   def encrypt_password(pass)
     Digest::SHA1.hexdigest(SALT + pass)
+  end
+
+  def identity
+    self.name || self.mobile || "我"
   end
 end
 

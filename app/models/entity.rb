@@ -19,11 +19,10 @@
 class Entity < ActiveRecord::Base
   include UUID
   belongs_to :user
-  belongs_to :folder
+  belongs_to :category
 
   validates :name, presence: true
   validates :name, uniqueness: { scope: :user_id }
-  validates :name, uniqueness: { scope: :folder_id }
   #validates :skp_file, presence: true
 
   scope :site_level, -> { where(is_system: true) }

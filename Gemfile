@@ -73,10 +73,11 @@ gem 'uikit-sass-rails'
 gem 'd3-rails'
 gem 'c3-rails'
 gem 'angular-rails-templates'
-gem 'therubyracer' 
+gem 'therubyracer'
 gem 'coffee-script-source'
 gem 'simple_form'
-
+gem 'awesome_nested_set'
+gem 'annotate', github: 'ctran/annotate_models'
 
 
 

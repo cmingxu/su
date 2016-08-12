@@ -6,24 +6,29 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-User.new(email: "cming.xu@gmail.com", password: "cming.xu@gmail.com", roles: ["admin"]).save
-owner = User.new(email: "siteowner@siteowner.com", password: "siteowner@siteowner", roles: ["siteowner", "user"])
-owner.save
-User.new(email: "user@user.com", password: "user@user", roles: ["user"]).save
+begin
+  User.delete_all
+  Category.delete_all
+  User.new(email: "cming.xu@gmail.com", password: "cming.xu@gmail.com", roles: ["admin"]).save
+  owner = User.new(email: "siteowner@siteowner.com", password: "siteowner@siteowner", roles: ["siteowner", "user"])
+  owner.save
+  User.new(email: "user@user.com", password: "user@user", roles: ["user"]).save
+rescue
+end
 
+root = Category.create name: 'root'
 %w(门窗 衣橱 厨房 卫生间 卧室 沙发 电视柜).each do |f|
-  Folder.create name: f, user_id: owner.id
-end 
+  Category.create name: f, parent: root
+end
 
 
 
 100.times do
   x = Entity.new do |e|
-    e.folder_id = Folder.all.shuffle.first.id
+    e.category_id = Category.all.shuffle.first.id
     e.name = Faker::Lorem.word
     e.user_id  = owner.id
     e.description = Faker::Lorem.paragraphs
   end
   x.save
-  puts x.errors
 end

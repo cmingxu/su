@@ -1,7 +1,4 @@
-= link_to "上传模型", '#modal_id', {"class" => 'uk-button uk-float-right uk-button-primary',"data-uk-modal" => true}
-
-#modal_id{"data-remote-url" => new_dashboard_entity_path}
-  = render :partial => "form"
+= link_to "上传模型", new_dashboard_entity_path, class: 'btn btn-primary'
 
 %table.table
   %thead
@@ -15,7 +12,7 @@
     - @entities.each do |v|
       %tr
         %td= link_to v.id, edit_dashboard_entity_path(v)
-        %td= v.folder.try(:name)
+        %td= v.category.try(:name)
         %td= v.name
         %td= v.created_at.to_s(:short)
         %td
@@ -36,4 +33,3 @@
       })
     }
   );});
-  

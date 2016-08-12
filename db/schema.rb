@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150904141948) do
+ActiveRecord::Schema.define(version: 20160812112403) do
+
+  create_table "categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "name"
+    t.string   "pinyin"
+    t.integer  "parent_id"
+    t.integer  "lft"
+    t.integer  "rgt"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "entities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer  "folder_id"
+    t.integer  "category_id"
     t.string   "name"
     t.string   "skp_file"
     t.datetime "created_at",                                null: false
@@ -24,16 +34,6 @@ ActiveRecord::Schema.define(version: 20150904141948) do
     t.string   "uuid"
     t.boolean  "is_system",                 default: false
     t.boolean  "visible",                   default: true
-  end
-
-  create_table "folders", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "name"
-    t.integer  "entity_count"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.integer  "user_id"
-    t.string   "uuid"
-    t.boolean  "is_system",    default: false
   end
 
   create_table "materials", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -72,6 +72,8 @@ ActiveRecord::Schema.define(version: 20150904141948) do
     t.string   "roles"
     t.boolean  "visible",                default: true
     t.string   "auth_token"
+    t.string   "name"
+    t.string   "mobile"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
