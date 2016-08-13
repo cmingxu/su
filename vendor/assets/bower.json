@@ -13,6 +13,7 @@
     "angular-aria": "latest",
     "jquery": "1.11.1",
     "underscore": "latest",
+    "bootstrap-select": "latest",
     "bootstrap": "latest"
   }
 }

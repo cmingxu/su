@@ -18,11 +18,14 @@
 //= require angular
 //= require bootstrap/dist/js/bootstrap.min
 //= require vendors/bootstrap.file-input
+//= require bootstrap-select/dist/js/bootstrap-select
 //
 
 ready = function(){
   $('input[type=file]').bootstrapFileInput();
   $('.file-inputs').bootstrapFileInput();
+
+$('.selectpicker').selectpicker();
 }
 
-$(document).ready(ready);
+$(document).on('ready page:load', ready);
