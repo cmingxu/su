@@ -1,0 +1,6 @@
+%ul.nav.nav-tabs
+  %li{role: :presentation, class: controller_name == 'setting' ? 'active' : '' }
+    = link_to "模型分类", dashboard_categories_path
+
+
+= render :partial => "dashboard/categories/list"

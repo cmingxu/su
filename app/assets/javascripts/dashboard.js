@@ -13,6 +13,16 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require jquery.turbolinks
 //= require c3
 //= require angular
 //= require bootstrap/dist/js/bootstrap.min
+//= require vendors/bootstrap.file-input
+//
+
+ready = function(){
+  $('input[type=file]').bootstrapFileInput();
+  $('.file-inputs').bootstrapFileInput();
+}
+
+$(document).ready(ready);

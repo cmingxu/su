@@ -35,6 +35,12 @@ class Dashboard::CategoriesController < Dashboard::BaseController
 
   def destroy
     authorize @category
+
+    if @category.entities.count > 0
+      redirect_to dashboard_categories_path, notice: "分类已被使用"
+      return
+    end
+
     if @category.destroy
       redirect_to dashboard_categories_path, notice: "模型删除成功"
     else

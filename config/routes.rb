@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   namespace :dashboard do
     get '/' => "base#index"
     get 'base/index'
+    get 'setting' => "setting#index"
     resources :categories
     resources :entities do
       member do

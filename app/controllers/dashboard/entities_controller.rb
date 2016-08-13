@@ -17,7 +17,7 @@ class Dashboard::EntitiesController < Dashboard::BaseController
 
     authorize @entity
     if @entity.save
-      redirect_to dashboard_entities_path, notice: "模型上传成功" 
+      redirect_to params[:commit] == "增加后继续" ? new_dashboard_entity_path : dashboard_entities_path, notice: "模型上传成功" 
     else
       flash[:notice] = @entity.errors.full_messages.first
       render :new

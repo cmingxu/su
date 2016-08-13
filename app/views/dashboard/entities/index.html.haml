@@ -14,7 +14,7 @@
         %td= link_to v.id, edit_dashboard_entity_path(v)
         %td= v.category.try(:name)
         %td= v.name
-        %td= v.created_at.to_s(:short)
+        %td= v.created_at.to_s(:cn_short_normal)
         %td
           = check_box_tag "visible", v.visible, v.visible, class: 'toggle_visible', data: { entity_id: v.id }
         %td

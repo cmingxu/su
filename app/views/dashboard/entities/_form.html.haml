@@ -1,11 +1,18 @@
 = simple_form_for [:dashboard, @entity], html: { class: 'form-horizontal', multipart: true }  do |f|
   .col-md-12
-    = f.select :category_id, options_from_collection_for_select(Category.all, 'id', 'name', f.object.category_id), label: "模型分类"
+    = f.select :category_id, nested_set_options(Category) {|i| "#{'-' * i.level} #{i.name}" }, label: "上级分类"
   .col-md-12
-    = f.input :name, class: 'uk-from-large ckeditor', label: '模型名称'
+    = f.input :name, class: '', label: '模型名称'
     (确保名称和SU模型内部名称一致)
+
   .col-md-12
-    = f.input :skp_file, label: '模型文件'
+    = f.input :skp_file, label: '模型文件', input_html: { title: '选择模型文件' }
+
+  .col-md-12
+    = f.input :icon, label: '模型Icon', input_html: { title: '选择图片' }
+
   .col-md-12
     = f.submit f.object.persisted? ? "修改" : "增加", class: 'btn btn-primary btn-default'
+    - if !f.object.persisted?
+      = f.submit "增加后继续", class: 'btn btn-warning btn-default'
 
