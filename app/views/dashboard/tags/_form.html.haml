@@ -1,0 +1,4 @@
+= simple_form_for [:dashboard, @tag], class: 'form form-horizontal', multipart: true  do |f|
+  = f.input :name, label: "tag名称"
+  = f.submit f.object.persisted? ? "修改" : "增加", class: 'btn.btn-primary.btn-default'
+

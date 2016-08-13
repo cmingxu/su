@@ -1,20 +1,4 @@
-= link_to "新建分类", new_dashboard_category_path, class: 'btn btn-primary'
+= render :partial => "layouts/dashboard_setting_tab"
 
-%table.table
-  %thead
-    %th ID
-    %th 上级
-    %th 分类名
-    %th
-  %tbody
-    - @categories.each do |v|
-      %tr
-        %td= link_to v.id, edit_dashboard_category_path(v)
-        %td= v.parent.name if v.parent
-        %td= v.name
-        %td
-          = link_to "修改", edit_dashboard_category_path(v)
-          = link_to "删除", dashboard_category_path(v), method: :delete, data: { confirm: "删除此模型？" }
-
-= paginate @categories
+= render :partial => "list"
 

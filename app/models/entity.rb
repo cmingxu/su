@@ -3,7 +3,7 @@
 # Table name: entities
 #
 #  id          :integer          not null, primary key
-#  folder_id   :integer
+#  category_id :integer
 #  name        :string(255)
 #  skp_file    :string(255)
 #  created_at  :datetime         not null

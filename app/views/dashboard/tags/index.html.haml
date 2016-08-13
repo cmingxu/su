@@ -1,0 +1,14 @@
+= render :partial => "layouts/dashboard_setting_tab"
+.row.tag_content
+  - @tags.each do |v|
+    %button.btn{class: cycle('btn-primary', 'btn-warning', 'btn-info', 'btn-success')}
+      = v.name
+      %span.badge
+        = link_to "X", dashboard_tag_path(v), method: :delete, data: { confirm: "删除此标签?" }
+
+
+%br
+= simple_form_for [:dashboard, @tag] do |f|
+  = f.input :name
+  = f.submit "新标签"
+
