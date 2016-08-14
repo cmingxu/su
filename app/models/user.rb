@@ -25,6 +25,8 @@
 
 class User < ActiveRecord::Base
   SALT = "foobar-su"
+  validates :mobile, presence: true
+  validates :password, presence: true, on: :create
 
   include UUID
   after_create do

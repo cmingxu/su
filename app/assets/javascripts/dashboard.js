@@ -28,4 +28,4 @@ ready = function(){
 $('.selectpicker').selectpicker();
 }
 
-$(document).on('ready page:load', ready);
+$(document).on('turbolinks:load', ready);

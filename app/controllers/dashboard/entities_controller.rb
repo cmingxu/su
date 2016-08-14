@@ -2,7 +2,11 @@ class Dashboard::EntitiesController < Dashboard::BaseController
   before_filter :find_entity, only: [:edit, :update, :destroy, :toggle_visible]
 
   def index
-    @entities = Entity.order('id desc').page params[:page]
+    if params[:category_id] 
+      @entities = Entity.where(category_id: params[:category_id]).order('id desc').page params[:page]
+    else
+      @entities = Entity.order('id desc').page params[:page]
+    end
     @entity  = current_user.entities.new
   end
 

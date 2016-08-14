@@ -1,17 +1,6 @@
-= form_for [:dashboard, @user], class: 'uk-form', multipart: true  do |f|
-  %table.table
-    %caption 管理员
-    %tr
-      %td Email
-      %td
-        = f.text_field :email, class: 'uk-from-large'
-
-    %tr
-      %td 密码
-      %td= f.text_field :password
-
-    %tr
-      %td
-        = f.submit f.object.persisted? ? "修改" : "增加", class: 'uk-button'
+= simple_form_for [:dashboard, @user], html: { multipart: true }  do |f|
+  = f.input :mobile, label: "电话号码"
+  = f.input :password, as: :password, label: "密码"
+  = f.submit f.object.persisted? ? "修改" : "增加", class: 'btn btn-primary btn-default'
 
 

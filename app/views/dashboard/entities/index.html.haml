@@ -1,5 +1,10 @@
 = link_to "上传模型", new_dashboard_entity_path, class: 'btn btn-primary'
 
+.row
+  - Category.all.each do |category|
+    %label.label{class: cycle('label-warning', 'label-success', 'label-default') }
+      = link_to category.name, dashboard_entities_path(category_id: category.id)
+
 %table.table
   %thead
     %th ID
@@ -12,14 +17,14 @@
     - @entities.each do |v|
       %tr
         %td= link_to v.id, edit_dashboard_entity_path(v)
-        %td= v.category.try(:name)
+        %td= link_to v.category.try(:name), dashboard_entities_path(category_id: v.category_id)
         %td= v.name
         %td= v.created_at.to_s(:cn_short_normal)
         %td
           = check_box_tag "visible", v.visible, v.visible, class: 'toggle_visible', data: { entity_id: v.id }
         %td
           = link_to "修改", edit_dashboard_entity_path(v)
-          = link_to "删除", dashboard_entity_path(v), method: :delete, data: { confirm: "删除此模型？" }
+          = link_to "删除", dashboard_entity_path(v), method: :delete, data: { confirm: "删除此模型？" }, class: 'btn btn-warning btn-default'
 
 = paginate @entities
 

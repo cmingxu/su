@@ -22,15 +22,15 @@
         .col-md-2.sidebar
           %ul.nav.nav-sidebar
             %li{class: nav_li_class('entities') }
-              = link_to "系统模型", dashboard_entities_path
+              = link_to gly_icon(:film) + "系统模型", dashboard_entities_path
             %li{class: nav_li_class('users') }
-              = link_to "用户列表", dashboard_users_path
+              = link_to gly_icon(:user) + "用户列表", dashboard_users_path
             %li{class: nav_li_class('materials') }
               = link_to "材料列表", dashboard_materials_path
             %li{class: nav_li_class('vendors') }
               = link_to "材料商", dashboard_vendors_path
             %li
-              = link_to "设置", dashboard_setting_path
+              = link_to gly_icon(:asterisk) + "设置", dashboard_setting_path
 
           %ul.nav.nav-sidebar
             %li.active

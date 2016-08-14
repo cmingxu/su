@@ -1,26 +1,7 @@
-= form_for [:dashboard, @vendor], class: 'uk-form' do |f|
-  %table.uk-table.uk-table-stripped.uk-table-hover
-    %caption 材料商
-    %tr
-      %td 名称
-      %td= f.text_field :name, class: 'uk-from-large'
-
-    %tr
-      %td 电话
-      %td= f.text_field :tel
-
-    %tr
-      %td 地址
-      %td= f.text_field :address
-
-    %tr
-      %td 简介
-      %td= f.text_area :short_desc
-
-    %tr
-      %td 详情
-      %td= f.text_area :desc, simple_mode: true, height: 800, class: 'ckeditor'
-
-    %tr
-      %td.uk-text-right{colspan: 2}
-        = f.submit f.object.persisted? ? "修改" : "增加", class: 'uk-button'
+= simple_form_for [:dashboard, @vendor] do |f|
+  = f.input :name, label: "名称"
+  = f.input :tel, label: "电话"
+  = f.input :address, label: "地址"
+  = f.input :short_desc, label: "描述"
+  = f.input :desc
+  = f.submit f.object.persisted? ? "修改" : "增加", class: 'btn btn.primary btn-default'
