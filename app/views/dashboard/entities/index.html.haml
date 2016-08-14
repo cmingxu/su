@@ -1,9 +1,26 @@
-= link_to "上传模型", new_dashboard_entity_path, class: 'btn btn-primary'
+%ul.list-inline.bg-info.label_bg
+  %li
+    %label.label{class: 'label-success' }
+      = link_to "全部", dashboard_entities_path
+  - Category.all.each do |category|
+    %li
+      %label.label{class: cycle('label-warning', 'label-success', 'label-default') } 
+        = link_to category.name, dashboard_entities_path(category_id: category.id)
+
+%ul.list-inline.bg-info.label_bg
+  %li
+    %label.label{class: 'label-success' }
+      = link_to "全部", dashboard_entities_path
+  - Tag.all.each do |tag|
+    %li
+      %label.label{class: cycle('label-warning', 'label-success', 'label-default') } 
+        = link_to tag.name, dashboard_entities_path(tag_id: tag.id)
+
+
+= link_to gly_icon(:plus) + "上传模型", new_dashboard_entity_path, class: 'btn btn-primary pull-right'
 
 .row
-  - Category.all.each do |category|
-    %label.label{class: cycle('label-warning', 'label-success', 'label-default') }
-      = link_to category.name, dashboard_entities_path(category_id: category.id)
+%hr
 
 %table.table
   %thead

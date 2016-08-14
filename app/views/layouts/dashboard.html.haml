@@ -26,9 +26,9 @@
             %li{class: nav_li_class('users') }
               = link_to gly_icon(:user) + "用户列表", dashboard_users_path
             %li{class: nav_li_class('materials') }
-              = link_to "材料列表", dashboard_materials_path
+              = link_to gly_icon(:user) + "材料列表", dashboard_materials_path
             %li{class: nav_li_class('vendors') }
-              = link_to "材料商", dashboard_vendors_path
+              = link_to gly_icon(:user) + "材料商", dashboard_vendors_path
             %li
               = link_to gly_icon(:asterisk) + "设置", dashboard_setting_path
 

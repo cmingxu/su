@@ -1,4 +1,4 @@
-= simple_form_for [:dashboard, @entity], html: { class: 'form-horizontal', multipart: true }  do |f|
+= simple_form_for [:dashboard, @entity], as: :horizontal_form, html: { multipart: true }  do |f|
   .col-md-12
     = f.input :category_id, collection: nested_set_options(Category) {|i| "#{'-' * i.level} #{i.name}" }, label: "上级分类", input_html: { class: 'selectpicker'  }
   .col-md-12
