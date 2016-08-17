@@ -6,9 +6,8 @@
       %span.badge
         = link_to "X", dashboard_tag_path(v), method: :delete, data: { confirm: "删除此标签?" }
 
-
 %br
 = simple_form_for [:dashboard, @tag] do |f|
-  = f.input :name
-  = f.submit "新标签"
+  = f.input :name, label: "标签"
+  = f.submit "增加", input_html: { class: 'btn btn-primary' } 
 

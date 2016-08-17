@@ -11,7 +11,7 @@
     %nav.nav.navbar-inverse.navbar-fixed-top
       .container-fluid
         .navbar-header
-          = link_to Setting.cn_name, root_path, class: 'navbar-brand'
+          = link_to gly_icon(:globe) + Setting.cn_name, root_path, class: 'navbar-brand'
 
         %ul.navbar-nav.nav.pull-right
           %li= link_to current_user.identity, dashboard_user_path(current_user)
@@ -19,22 +19,22 @@
 
     .container-fluid.main_content
       .row
-        .col-md-2.sidebar
+        .sidebar
           %ul.nav.nav-sidebar
             %li{class: nav_li_class('entities') }
               = link_to gly_icon(:film) + "系统模型", dashboard_entities_path
             %li{class: nav_li_class('users') }
               = link_to gly_icon(:user) + "用户列表", dashboard_users_path
             %li{class: nav_li_class('materials') }
-              = link_to gly_icon(:user) + "材料列表", dashboard_materials_path
+              = link_to gly_icon(:tag) + "材料列表", dashboard_materials_path
             %li{class: nav_li_class('vendors') }
-              = link_to gly_icon(:user) + "材料商", dashboard_vendors_path
+              = link_to gly_icon(:inbox) + "材料商", dashboard_vendors_path
             %li
               = link_to gly_icon(:asterisk) + "设置", dashboard_setting_path
 
           %ul.nav.nav-sidebar
             %li.active
-
-        .col-md-10.col-md-offset-2.main_content
-          = render :partial => "layouts/message"
-          = yield
+        .main_content
+          .col-md-12
+            = render :partial => "layouts/message"
+            = yield

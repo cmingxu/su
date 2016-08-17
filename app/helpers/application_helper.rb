@@ -1,7 +1,7 @@
 module ApplicationHelper
 
   def gly_icon(icon, text = "")
-    raw(content_tag(:span, text, class: "glyphicon glyphicon-#{icon}") + " ")
+    raw(content_tag(:i, text, class: "glyphicon glyphicon-#{icon} fa-2x") + " ")
   end
 
   def nav_li_class *cn

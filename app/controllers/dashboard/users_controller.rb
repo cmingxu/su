@@ -1,5 +1,5 @@
 class Dashboard::UsersController < Dashboard::BaseController
-  before_filter :find_user, only: [:edit, :update, :destroy, :toggle_visible]
+  before_action :find_user, only: [:edit, :update, :destroy, :toggle_visible]
 
   respond_to :html
 

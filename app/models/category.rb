@@ -20,3 +20,4 @@ class Category < ApplicationRecord
     validates :name, presence: { message: '分类名称不能空' }
     validates :name, uniqueness: { scope: :parent_id, message: '分类名称不能重复' }
 end
+

@@ -1,19 +1,21 @@
 %ul.list-inline.bg-info.label_bg
   %li
-    %label.label{class: 'label-success' }
-      = link_to "全部", dashboard_entities_path
+    %h4
+      %label.label.label-bg{class: 'label-success' }
+        = link_to "全部", dashboard_entities_path
   - Category.all.each do |category|
     %li
-      %label.label{class: cycle('label-warning', 'label-success', 'label-default') } 
-        = link_to category.name, dashboard_entities_path(category_id: category.id)
+      %h4
+        %label.label{class: cycle('label-warning', 'label-success', 'label-default') } 
+          = link_to category.name, dashboard_entities_path(category_id: category.id)
 
-%ul.list-inline.bg-info.label_bg
+%ul.list-inline.bg-warning.label_bg
   %li
     %label.label{class: 'label-success' }
       = link_to "全部", dashboard_entities_path
   - Tag.all.each do |tag|
     %li
-      %label.label{class: cycle('label-warning', 'label-success', 'label-default') } 
+      %label.label{class: cycle('label') }
         = link_to tag.name, dashboard_entities_path(tag_id: tag.id)
 
 
@@ -40,8 +42,8 @@
         %td
           = check_box_tag "visible", v.visible, v.visible, class: 'toggle_visible', data: { entity_id: v.id }
         %td
-          = link_to "修改", edit_dashboard_entity_path(v)
-          = link_to "删除", dashboard_entity_path(v), method: :delete, data: { confirm: "删除此模型？" }, class: 'btn btn-warning btn-default'
+          = link_to gly_icon(:pencil), edit_dashboard_entity_path(v)
+          = link_to gly_icon(:remove), dashboard_entity_path(v), method: :delete, data: { confirm: "删除此模型？" }
 
 = paginate @entities
 

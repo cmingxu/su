@@ -13,8 +13,8 @@
         %td= v.parent.name if v.parent
         %td= v.name
         %td
-          = link_to "修改", edit_dashboard_category_path(v)
-          = link_to "删除", dashboard_category_path(v), method: :delete, data: { confirm: "删除此模型？" }
+          = link_to gly_icon(:pencil), edit_dashboard_category_path(v)
+          = link_to gly_icon(:remove), dashboard_category_path(v), method: :delete, data: { confirm: "删除此模型？" }
 
 = paginate @categories
 

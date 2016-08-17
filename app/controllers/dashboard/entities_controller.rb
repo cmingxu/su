@@ -3,9 +3,9 @@ class Dashboard::EntitiesController < Dashboard::BaseController
 
   def index
     if params[:category_id] 
-      @entities = Entity.where(category_id: params[:category_id]).order('id desc').page params[:page]
+      @entities = Entity.includes(:category).where(category_id: params[:category_id]).order('id desc').page params[:page]
     else
-      @entities = Entity.order('id desc').page params[:page]
+      @entities = Entity.includes(:category).order('id desc').page params[:page]
     end
     @entity  = current_user.entities.new
   end
