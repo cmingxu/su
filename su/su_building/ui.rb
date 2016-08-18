@@ -7,8 +7,8 @@ class BuildingUI
   TOP = 100
 
   #HOST = "http://182.92.78.92"
-  HOST = "http://localhost:3000"
-  #HOST = "http://192.168.31.104:3000"
+  #HOST = "http://localhost:3000"
+  HOST = "http://114.55.130.152"
 
   attr_accessor :my_dialog
   attr_accessor :action_callbacks
