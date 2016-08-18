@@ -16,7 +16,7 @@ namespace :plugin do
 
     sh "cd #{tmp_path}/su && zip -r su.rbz * && cd -"
     sh "mv #{tmp_path}/su/su.rbz #{plugin_path}/"
-    sh "cp #{plugin_path}/su.rbz /Users/cmingxu/Documents/baidu_yun/百度云同步盘/shared"
+    #sh "cp #{plugin_path}/su.rbz /Users/cmingxu/Documents/baidu_yun/百度云同步盘/shared"
   end
 
   task :direct_copy do
