@@ -21,7 +21,6 @@ module Su
      config.angular_templates.module_name    = 'templates'
      config.angular_templates.ignore_prefix  = %w(templates/)
      config.angular_templates.inside_paths   = ['app/assets']
-     config.angular_templates.markups        = %w(erb str haml md)
      config.angular_templates.extension      = 'html'
      config.assets.precompile += %w(.svg .eot .woff .ttf .woff2)
      # Settings in config/environments/* take precedence over those specified here.
