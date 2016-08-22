@@ -9,6 +9,8 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user, :user_signed_in?
 
+    protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
+
   def dump_user_agent
     Rails.logger.error request.headers["User-Agent"]
   end

@@ -18,17 +18,20 @@ $ROOT_PATH = File.expand_path(File.join(File.dirname(__FILE__), "su_building"))
 # add ruby file path into loading pathes
 $LOAD_PATH.push($ROOT_PATH)
 
-$SKP_PATH = File.expand_path(File.join($ROOT_PATH , "skps"))
 $INSTALL_PATH = File.expand_path(File.join($ROOT_PATH , "..", ".."))
-FileUtils.mkdir_p($SKP_PATH) if !File.exists?($SKP_PATH)
-FileUtils.chmod(0777, $SKP_PATH)
 
 # load required rb files
 
 ## Logger
-$TMP_FILE_PATH = File.join($ROOT_PATH,  "tmp")
+
+$TMP_FILE_PATH = File.join(Dir.pwd,  "su_building", "tmp")
 FileUtils.mkdir_p($TMP_FILE_PATH) if !File.exists?($TMP_FILE_PATH)
 FileUtils.chmod(0777, $TMP_FILE_PATH)
+
+$SKP_PATH = File.expand_path(File.join(Dir.pwd, "su_building", "skps"))
+FileUtils.mkdir_p($SKP_PATH) if !File.exists?($SKP_PATH)
+FileUtils.chmod(0777, $SKP_PATH)
+
 # setup logger for logging purpose
 $logger = Logger.new File.join($TMP_FILE_PATH,  "logger.log")
 $logger.debug "Initializing APP"

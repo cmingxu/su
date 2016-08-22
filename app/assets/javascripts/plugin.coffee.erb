@@ -157,7 +157,6 @@ building.controller "Login", ['$scope', '$http', ($scope, $http) ->
       if response.status == "fail"
         alert response.message
       else
-        alert response.headers
         window.location.hash = "/local"
 ]
 

@@ -23,7 +23,7 @@ module ActionCallback
   end
 
   def local_models
-    Dir.glob($SKP_PATH + File::Separator + "*").map do |f|
+    Dir.glob($SKP_PATH + File::Separator + "*.skp").map do |f|
       icon_path = File.join($TMP_FILE_PATH, File.basename(f).split(".")[0] + ".png")
       {
         :name => File.basename(f),
@@ -60,7 +60,7 @@ module ActionCallback
       component_definition_name = dynamic_attributes["_name"] if dynamic_attributes
       if current_entity.is_a?(Sketchup::ComponentInstance) && current_entity.definition.name
         current_entity.definition.save_as File.join($SKP_PATH, "#{component_definition_name}.skp")
-        thumbnail_file_path = File.join($TMP_FILE_PATH, "#{component_definition_name}.png")
+        thumbnail_file_path = File.join($SKP_PATH, "#{component_definition_name}.png")
         current_entity.definition.refresh_thumbnail
         current_entity.definition.save_thumbnail(thumbnail_file_path)
 
@@ -125,18 +125,26 @@ module ActionCallback
     end
 
     dialog.add_action_callback('upload_local_model') do |action, params|
-      $logger.debug "upload model #{params}"
-      $logger.debug "model name #{params.split("||")[0]}"
-      $logger.debug "cookies name #{params.split("||")[1]}"
+      begin
+        $logger.debug "upload model #{params}"
+        $logger.debug "model name #{params.split("||")[0]}"
+        $logger.debug "cookies name #{params.split("||")[1]}"
 
-      model_name = params.split("||")[0]
-      auth_token = params.split("||")[1]
+        model_name = params.split("||")[0]
+        auth_token = params.split("||")[1]
+        icon_name = model_name.gsub(File.extname(model_name),".png")
 
-      uri = URI(BuildingUI::HOST + "/api/entities")
-      http = Net::HTTP.new(uri.host, uri.port)
-      req = Net::HTTP::Post.new(uri.path, {'Content-Type' =>'application/json', 'Auth-Token' => auth_token})
-      req.body = {entity: { name: model_name, file_content: Base64.encode64(File.read(File.join($SKP_PATH, model_name)))  }}.to_json
-      http.request(req)
+        uri = URI(BuildingUI::HOST + "/api/entities")
+        http = Net::HTTP.new(uri.host, uri.port)
+        req = Net::HTTP::Post.new(uri.path, {'Content-Type' =>'application/json', 'Auth-Token' => auth_token})
+        req.body = {entity: { name: model_name,
+                              file_content: Base64.encode64(File.read(File.join($SKP_PATH, model_name))),
+                              icon_content: Base64.encode64(File.read(File.join($SKP_PATH, icon_name)))
+        }}.to_json
+        http.request(req)
+      rescue Exception => e
+        $logger.error e
+      end
     end
 
     dialog.add_action_callback('initialization') do |action, params|
@@ -157,8 +165,8 @@ module ActionCallback
           hash[k] = v
         end
 
-        tmp_thumbnail_file_path = File.join($TMP_FILE_PATH, 'tmp_thumbnail.png')
-        thumbnail_file_path = File.join($TMP_FILE_PATH, 'thumbnail.png')
+        tmp_thumbnail_file_path = File.join($SKP_PATH, 'tmp_thumbnail.png')
+        thumbnail_file_path = File.join($SKP_PATH, 'thumbnail.png')
         component_definition.refresh_thumbnail
         component_definition.save_thumbnail(tmp_thumbnail_file_path)
 
@@ -231,7 +239,7 @@ module ActionCallback
       f.close
 
       icon_file_path = params.split('|')[1]
-      f = File.open(File.join($TMP_FILE_PATH, "s_#{File.basename(icon_file_path)}"), "w")
+      f = File.open(File.join($SKP_PATH, "s_#{File.basename(icon_file_path)}"), "w")
       f << open(BuildingUI::HOST + icon_file_path).read
       f.close
 
@@ -245,7 +253,7 @@ module ActionCallback
       f.close
 
       icon_file_path = params.split('|')[1]
-      f = File.open(File.join($TMP_FILE_PATH, "s_#{File.basename(icon_file_path)}"), "w")
+      f = File.open(File.join($SKP_PATH, "s_#{File.basename(icon_file_path)}"), "w")
       f << open(BuildingUI::HOST + icon_file_path).read
       f.close
 

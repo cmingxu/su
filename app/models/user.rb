@@ -68,6 +68,8 @@ class User < ActiveRecord::Base
   def password_valid?(pass)
     self.encrypted_password == encrypt_password(pass)
   end
+  
+  alias :valid_password? :password_valid?
 
   def encrypt_password(pass)
     Digest::SHA1.hexdigest(SALT + pass)
