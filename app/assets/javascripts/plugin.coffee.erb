@@ -60,7 +60,7 @@ building.directive 'su-number-format', ['$filter', ($filter) ->
     ctrl.$parser.push parse
 ]
 
-building.factory "Entity", ($resource) ->
+building.factory "Entity", ($Entity, $resource) ->
   $resource("/api/entities/:id", {id: '@id'}, {
     index:
       method: 'GET'
