@@ -25,6 +25,7 @@ Rails.application.configure do
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
 
+   config.assets.js_compressor = Uglifier.new(mangle: false)
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
@@ -85,12 +86,4 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
 
-    class NoCompression
-  def compress(string)
-    string
-  end
-end
-  config.assets.compress = true
-config.assets.js_compressor = NoCompression.new
-config.assets.css_compressor = NoCompression.new
 end
