@@ -21,7 +21,7 @@ building.config ['$stateProvider', '$urlRouterProvider', ($stateProvider, $urlRo
   $stateProvider.state 'attributes',
     url: "/attributes"
     controller: 'Attributes'
-    templateUrl: '/assets/plugin/attributes.html'
+    templateUrl: '<%= asset_path 'attributes.html' %>'
 
   $stateProvider.state 'local',
     url: "/local"
