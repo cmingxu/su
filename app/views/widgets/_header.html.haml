@@ -1,14 +1,20 @@
 .container
-  .nav.navbar
-    .nav-header
-      = image_tag "logo.png", style: "height: 30px"
-      - if user_signed_in?
-        = link_to "退出登录", session_path, method: :delete, class: "btn btn-danger btn-sm pull-right"
-        - if params[:controller] == "welcome"
-          = link_to gly_icon(:desktop) + "我的后台", dashboard_path, data: { 'no-turbolink': true }, class: "btn btn-default btn-sm pull-right"
-        - else
-          = link_to gly_icon(:home) + "回到首页", root_path, class: "btn btn-default btn-sm pull-right"
+  %header.nav.navbar
+    .navbar-header.brand
+      = image_tag "logo.png", height: 60
+    %nav
+      %ul.nav.navbar-nav.pull-right
+        - if user_signed_in?
+          %li
+            = link_to "退出登录", session_path, method: :delete
+          %li
+            - if params[:controller] == "welcome"
+              = link_to "我的后台", dashboard_path, data: { 'no-turbolinks': true }
+            - else
+              = link_to "回到首页", root_path
 
-      - else
-        = link_to "登录", new_session_path, data: { 'no_turbolink': true }, class: 'btn btn-default btn-sm pull-right', role: 'button'
-        = link_to "注册", new_registration_path, data: { 'no_turbolink': true },class: 'btn btn-warning btn-sm pull-right'
+        - else
+          %li
+            = link_to "登录", new_session_path, data: { 'no_turbolink': true }
+          %li
+            = link_to "注册", new_registration_path, data: { 'no_turbolink': true }
