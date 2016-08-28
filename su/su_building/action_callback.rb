@@ -24,7 +24,7 @@ module ActionCallback
 
   def local_models
     Dir.glob($SKP_PATH + File::Separator + "*.skp").map do |f|
-      icon_path = File.join($TMP_FILE_PATH, File.basename(f).split(".")[0] + ".png")
+      icon_path = File.join($SKP_PATH, File.basename(f).split(".")[0] + ".png")
       {
         :name => File.basename(f),
         :skp_file_size => humanize_file_size(File.stat(f).size),
@@ -121,6 +121,7 @@ module ActionCallback
     dialog.add_action_callback('remove_local_component_definition') do |action, params|
       $logger.debug "remove model #{params}"
       FileUtils.rm_rf File.join($SKP_PATH, params)
+      FileUtils.rm_rf File.join($SKP_PATH, params.sub(".skp", ".png")
       update_js_value(dialog, "local_models", local_models.to_json)
     end
 
@@ -137,7 +138,8 @@ module ActionCallback
         uri = URI(BuildingUI::HOST + "/api/entities")
         http = Net::HTTP.new(uri.host, uri.port)
         req = Net::HTTP::Post.new(uri.path, {'Content-Type' =>'application/json', 'Auth-Token' => auth_token})
-        req.body = {entity: { name: model_name,
+        req.body = {entity: { model_name: model_name,
+                              icon_name: icon_name,
                               file_content: Base64.encode64(File.read(File.join($SKP_PATH, model_name))),
                               icon_content: Base64.encode64(File.read(File.join($SKP_PATH, icon_name)))
         }}.to_json

@@ -1,9 +1,9 @@
-= link_to gly_icon(:plus) +"新用户", new_dashboard_user_path(admin: true), {"class" => 'btn btn-default btn-primary'}
+= link_to gly_icon(:plus) +"新用户", new_dashboard_user_path(admin: true), {"class" => 'btn btn-default btn-primary pull-right'}
 
 %table.table
   %thead
     %th ID
-    %th Email
+    %th 手机号码
     %th 可见？
     %th 账户类型
     %th
@@ -12,13 +12,16 @@
       %tr
         %td= link_to u.id, edit_dashboard_user_path(u)
         %td
-          = link_to u.email, edit_dashboard_user_path(u)
+          = link_to u.mobile, edit_dashboard_user_path(u)
         %td
           = u.visible? ? "是" : "否"
           = check_box_tag "visible", u.visible, u.visible, class: 'toggle_visible', data: { user_id: u.id }
         %td
           - u.roles_in_words.map do |r|
             .uk-badge= r
+
+        %td
+          = link_to gly_icon(:remove), dashboard_user_path(u), method: :delete, data: { confirm: "删除此用户？" }
 
 = paginate @users
 

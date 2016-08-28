@@ -14,15 +14,15 @@ class Api::EntitiesController < Api::BaseController
 
   def create
     @entity = @user.entities.new
-    @entity.name = params[:entity][:name]
+    @entity.name = params[:entity][:model_name]
 
-    model = File.new(Rails.root.join("public", params[:entity][:name]), "wb")
+    model = File.new(Rails.root.join("public", params[:entity][:model_name]), "wb")
     model.write Base64.decode64(params[:entity][:file_content])
     @entity.skp_file = model
     model.close
     FileUtils.rm_rf(model.path)
 
-    icon = File.new(Rails.root.join("public", params[:entity][:name]), "wb")
+    icon = File.new(Rails.root.join("public", params[:entity][:icon_name]), "wb")
     icon.write Base64.decode64(params[:entity][:icon_content])
     @entity.icon = icon
     icon.close

@@ -8,5 +8,5 @@ json.array! @entities do |entity|
   #json.description entity.description
   json.uuid entity.uuid
   #json.icon entity.icon.thumb.url || image_path('model.jpeg')
-  json.icon image_path('model.jpg')
+  json.icon image_path(entity.icon.url)
 end

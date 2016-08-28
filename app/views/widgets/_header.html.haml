@@ -10,5 +10,5 @@
           = link_to gly_icon(:home) + "回到首页", root_path, class: "btn btn-default btn-sm pull-right"
 
       - else
-        = link_to "登录", new_session_path, data: { 'no_turbolink': true }, class: 'btn btn-default btn-sm', role: 'button'
-        = link_to "注册", new_registration_path, data: { 'no_turbolink': true },class: 'btn btn-warning btn-sm'
+        = link_to "登录", new_session_path, data: { 'no_turbolink': true }, class: 'btn btn-default btn-sm pull-right', role: 'button'
+        = link_to "注册", new_registration_path, data: { 'no_turbolink': true },class: 'btn btn-warning btn-sm pull-right'

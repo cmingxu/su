@@ -26,14 +26,15 @@
 class User < ActiveRecord::Base
   SALT = "foobar-su"
   validates :mobile, presence: true
-  validates :password, presence: true, on: :create
+  validates :mobile, uniqueness: true
+  validates :encrypted_password, presence: true, on: :create
 
   include UUID
   after_create do
     self.update_column :auth_token, SecureRandom.hex(16)
   end
 
-  attr_accessor :password
+  attr_accessor :password, :password_confirmation
 
   has_many :entities
 
@@ -68,7 +69,7 @@ class User < ActiveRecord::Base
   def password_valid?(pass)
     self.encrypted_password == encrypt_password(pass)
   end
-  
+
   alias :valid_password? :password_valid?
 
   def encrypt_password(pass)

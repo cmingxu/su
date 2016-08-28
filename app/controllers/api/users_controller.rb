@@ -2,7 +2,7 @@ class Api::UsersController < Api::BaseController
   respond_to :json
 
   def create
-    @user = User.find_by_email params[:user][:email]
+    @user = User.find_by_mobile params[:user][:mobile]
     response_fail("用户已存在") and return if @user
 
     if params[:user][:password] != params[:user][:password_confirmation]
@@ -17,7 +17,6 @@ class Api::UsersController < Api::BaseController
     if @user.save
       cookies[:auth_token] = @user.auth_token
       session[:user_id] = @user.id
-      Rails.logger.debug response.headers 
       response_success
     else
       response_fail(@user.errors.full_messages.first)
@@ -25,7 +24,7 @@ class Api::UsersController < Api::BaseController
   end
 
   def login
-    @user = User.find_by_email params[:user][:email]
+    @user = User.find_by_mobile params[:user][:mobile]
     if @user && @user.valid_password?(params[:user][:password])
       session[:user_id] = @user.id
       cookies[:auth_token] = { :value => @user.auth_token, :expires => 1.hour.from_now } 

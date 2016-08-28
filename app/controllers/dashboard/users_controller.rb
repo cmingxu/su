@@ -47,6 +47,17 @@ class Dashboard::UsersController < Dashboard::BaseController
     respond_with @user
   end
 
+  def destroy
+    authorize @user
+    if @user.destroy
+      flash[:notice] = "用户删除成功"
+    else
+      flash[:alert] = "用户删除失败"
+    end
+
+    redirect_to :back
+  end
+
   private
   def find_user
     @user = User.find params[:id]

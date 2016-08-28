@@ -20,7 +20,7 @@
       .models.su_system_models
         .model_item{'ng-repeat' => "model in remote_models track by model.uuid"}
           .model_icon
-            %img{"ng-src" => "{{model.icon}}", width: 60, height: 60 }
+            %img{"ng-src" => "{{model.icon}}", width: 40, height: 50 }
           .model_details
             .model_name
               %strong {{model.name}}

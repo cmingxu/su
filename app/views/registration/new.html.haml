@@ -1,7 +1,7 @@
 %p.form_title 欢迎来到#{Setting.cn_name}
 
 = form_for(@user, url: registration_path, class: 'form login') do |f|
-  = f.email_field :email, autofocus: true, class: 'col-md-12', placeholder: "请输入邮箱"
+  = f.text_field :mobile, autofocus: true, class: 'col-md-12', placeholder: "请输入手机号码"
   = f.password_field :password, autocomplete: "off", class: 'col-md-12', placeholder: "输入密码"
   = f.password_field :password_confirmation, autocomplete: "off", class: 'col-md-12', placeholder: "再次输入密码"
   = f.submit "注册", class: 'btn btn-success btn-primary col-md-12 btn-sm'

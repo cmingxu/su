@@ -115,8 +115,6 @@ building.controller "Attributes", ['$scope', 'CurrentUser', '$cookies', ($scope,
           attributes_config[k]["options"]
       )
   $scope.attributes_display()
-
-
 ]
 
 building.controller "Local", ['$scope', 'CurrentUser', '$cookies', ($scope, CurrentUser, $cookies) ->
@@ -130,7 +128,7 @@ building.controller "Local", ['$scope', 'CurrentUser', '$cookies', ($scope, Curr
     $scope.bridge "upload_local_model", model + "||" + CurrentUser.authToken()
 ]
 
-building.controller "Remote", ['$scope', '$http', '$interval', "Entity", ($scope, $http, $interval, Entity) ->
+building.controller "Remote", ['CurrentUser', '$scope', '$http', '$interval', "Entity", (CurrentUser, $scope, $http, $interval, Entity) ->
   $scope.current_entity = {}
   $scope.remote_models = {}
 
@@ -139,16 +137,16 @@ building.controller "Remote", ['$scope', '$http', '$interval', "Entity", ($scope
       Entity.remove_enetity {uuid: uuid}, (data) ->
         $scope.remote_models = data
 
-  Entity.mine (data) ->
-    $scope.remote_models = data
-
+  if CurrentUser.isLogin()
+    Entity.mine (data) ->
+      $scope.remote_models = data
 ]
 
 building.controller "Login", ['$scope', '$http', ($scope, $http) ->
   $scope.current_user = {}
   $scope.login = ()->
-    if !$scope.current_user.email or !$scope.current_user.email.match(/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i)
-      alert "邮箱格式不正确"
+    if !$scope.current_user.mobile or !$scope.current_user.mobile.match(/^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/)
+      alert "手机号码格式不正确"
       return
     if !$scope.current_user.password
       alert "密码不正确"
@@ -164,8 +162,8 @@ building.controller "Login", ['$scope', '$http', ($scope, $http) ->
 building.controller "Register", ['$scope', '$http', ($scope, $http) ->
   $scope.current_user = {}
   $scope.register = ()->
-    if !$scope.current_user.email or !$scope.current_user.email.match(/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i)
-      alert "邮箱格式不正确"
+    if !$scope.current_user.mobile or !$scope.current_user.mobile.match(/^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/)
+      alert "手机号码格式不正确"
       return
     if !$scope.current_user.password
       alert "密码不正确"
@@ -178,9 +176,6 @@ building.controller "Register", ['$scope', '$http', ($scope, $http) ->
       if response.status == "fail"
         alert response.message
       else
-        alert response
-        alert status
-        alert headers
         window.location.hash = "/local"
 
 ]
