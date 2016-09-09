@@ -28,7 +28,7 @@ $TMP_FILE_PATH = File.join(Dir.pwd,  "su_building", "tmp")
 FileUtils.mkdir_p($TMP_FILE_PATH) if !File.exists?($TMP_FILE_PATH)
 FileUtils.chmod(0777, $TMP_FILE_PATH)
 
-$SKP_PATH = File.expand_path(File.join(Dir.pwd, "su_building", "skps"))
+$SKP_PATH = File.expand_path(File.join($ROOT_PATH, "skps"))
 FileUtils.mkdir_p($SKP_PATH) if !File.exists?($SKP_PATH)
 FileUtils.chmod(0777, $SKP_PATH)
 

@@ -1,0 +1,18 @@
+= link_to "新建风格", new_dashboard_style_path, class: 'btn btn-primary pull-right'
+
+%table.table
+  %thead
+    %th ID
+    %th 风格
+    %th
+  %tbody
+    - @styles.each do |v|
+      %tr
+        %td= link_to v.id, edit_dashboard_style_path(v)
+        %td= v.name
+        %td
+          = link_to gly_icon(:pencil), edit_dashboard_style_path(v)
+          = link_to gly_icon(:remove), dashboard_style_path(v), method: :delete, data: { confirm: "删除此模型？" }
+
+= paginate @styles
+

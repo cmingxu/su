@@ -9,11 +9,13 @@ class BuildingUI
   #HOST = "http://182.92.78.92"
   #HOST = "http://localhost:3000"
   HOST = "http://114.55.130.152"
+  #HOST = "http://baidu.com"
 
   attr_accessor :my_dialog
   attr_accessor :action_callbacks
 
   def initialize
+    $logger.debug "BuildingUI show"
     @my_dialog = UI::WebDialog.new("构建中国", true, "", WIDTH, HEIGHT, LEFT, TOP, true)
     @action_callbacks = []
     @my_dialog.set_url  "#{HOST}/plugin"
@@ -26,6 +28,7 @@ class BuildingUI
 
 
   def show
+    $logger.debug "show"
     @my_dialog.show
   end
 

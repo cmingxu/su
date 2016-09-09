@@ -115,13 +115,13 @@ module ActionCallback
         selection.definition.set_attribute("dynamic_attributes", params.split(":")[0], params.split(":")[1])
       end
       $dc_observers.get_latest_class.redraw_with_undo(selection)
-      $logger.debug selection.get_attribute("dynamic_attributes", "hn")
     end
 
     dialog.add_action_callback('remove_local_component_definition') do |action, params|
       $logger.debug "remove model #{params}"
       FileUtils.rm_rf File.join($SKP_PATH, params)
-      FileUtils.rm_rf File.join($SKP_PATH, params.sub(".skp", ".png")
+      FileUtils.rm_rf File.join($SKP_PATH, params.sub(".skp", ".png"))
+
       update_js_value(dialog, "local_models", local_models.to_json)
     end
 

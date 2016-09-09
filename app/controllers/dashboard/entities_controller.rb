@@ -2,8 +2,10 @@ class Dashboard::EntitiesController < Dashboard::BaseController
   before_filter :find_entity, only: [:edit, :update, :destroy, :toggle_visible]
 
   def index
-    if params[:category_id] 
+    if params[:category_id]
       @entities = Entity.includes(:category).where(category_id: params[:category_id]).order('id desc').page params[:page]
+    elsif params[:style_id]
+      @entities = Entity.includes(:style_id).where(style_id: params[:style_id]).order('id desc').page params[:page]
     else
       @entities = Entity.includes(:category).order('id desc').page params[:page]
     end

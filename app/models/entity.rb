@@ -20,6 +20,7 @@ class Entity < ActiveRecord::Base
   include UUID
   belongs_to :user
   belongs_to :category
+  belongs_to :style
 
   validates :name, presence: true
   validates :name, uniqueness: { scope: :user_id }

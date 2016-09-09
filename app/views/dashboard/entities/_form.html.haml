@@ -1,4 +1,4 @@
-= simple_form_for [:dashboard, @entity], as: :horizontal_form, html: { multipart: true }  do |f|
+= simple_form_for [:dashboard, @entity], html: { multipart: true }  do |f|
   .col-md-12
     = f.input :skp_file, label: '模型文件', input_html: { title: 'SU模型' }
 
@@ -7,6 +7,9 @@
 
   .col-md-12
     = f.input :category_id, collection: nested_set_options(Category) {|i| "#{'-' * i.level} #{i.name}" }, label: "模型分类", input_html: { class: 'selectpicker'  }
+
+  .col-md-12
+    = f.input :style_id, collection: Style.all, label: "风格", input_html: { class: 'selectpicker'  }
   .col-md-12
     = f.input :name, label: '模型名称'
     (确保名称和SU模型内部名称一致)

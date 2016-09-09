@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     get 'base/index'
     get 'setting' => "setting#index"
     resources :categories
+    resources :styles
     resources :tags
     resources :entities do
       member do

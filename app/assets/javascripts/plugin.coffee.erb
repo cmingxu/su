@@ -203,7 +203,11 @@ building.controller "Main", ['$scope', '$http', '$timeout', "Entity", "CurrentUs
     f = code[0]
     s = code[1]
     n = code[4..8].join("")
-    return name_config[f][s] + n if name_config[f][s]
+    try
+      name = name_config[f][s] + n if name_config[f][s]
+      return name
+    catch error
+      return code
     return code
 
 
