@@ -27,7 +27,7 @@
               %strong {{model.name}}
               %span.folder_name.uk-success
                 {{model.folder_name}}
-            .model_desc
+            .model_desc{'ng-show' => 'model.skp_file_size'}
               %span.model_size
                 {{model.skp_file_size}}
               %span.model_buttons.uk-float-right

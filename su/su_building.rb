@@ -24,7 +24,8 @@ $INSTALL_PATH = File.expand_path(File.join($ROOT_PATH , "..", ".."))
 
 ## Logger
 
-$TMP_FILE_PATH = File.join(Dir.pwd,  "su_building", "tmp")
+#$TMP_FILE_PATH = File.join(Dir.pwd,  "su_building", "tmp")
+$TMP_FILE_PATH = File.join($ROOT_PATH, "tmp")
 FileUtils.mkdir_p($TMP_FILE_PATH) if !File.exists?($TMP_FILE_PATH)
 FileUtils.chmod(0777, $TMP_FILE_PATH)
 

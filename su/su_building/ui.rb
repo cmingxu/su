@@ -33,3 +33,16 @@ class BuildingUI
   end
 
 end
+
+class TestDialog
+  def test
+    height = 600
+    width = 800
+    left = 100
+    top = 100
+    host = "http://localhost:3000"
+    my_dialog = UI::WebDialog.new("构建中国", true, "", width, height, left, top, true)
+    my_dialog.set_url  "#{host}/plugin"
+    my_dialog.show
+  end
+end

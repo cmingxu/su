@@ -6,27 +6,29 @@
   - Category.all.each do |category|
     %li
       %h4
-        %label.label{class: cycle('label-warning', 'label-success', 'label-default') } 
+        %label.label{class: cycle('label-warning') }
           = link_to category.name, dashboard_entities_path(category_id: category.id)
 
-%ul.list-inline.bg-warning.label_bg
-  %li
-    %label.label{class: 'label-success' }
-      = link_to "全部", dashboard_entities_path
-  - Tag.all.each do |tag|
+- if Tag.count > 0
+  %ul.list-inline.bg-warning.label_bg
     %li
-      %label.label{class: cycle('label') }
-        = link_to tag.name, dashboard_entities_path(tag_id: tag.id)
+      %label.label{class: 'label-success' }
+        = link_to "全部", dashboard_entities_path
+    - Tag.all.each do |tag|
+      %li
+        %label.label{class: cycle('label') }
+          = link_to tag.name, dashboard_entities_path(tag_id: tag.id)
 
 
-%ul.list-inline.bg-warning.label_bg
-  %li
-    %label.label{class: 'label-success' }
-      = link_to "全部", dashboard_entities_path
-  - Style.all.each do |style|
+- if Style.count > 0
+  %ul.list-inline.bg-warning.label_bg
     %li
-      %label.label{class: cycle('label') }
-        = link_to style.name, dashboard_entities_path(style_id: style.id)
+      %label.label{class: 'label-success' }
+        = link_to "全部", dashboard_entities_path
+    - Style.all.each do |style|
+      %li
+        %label.label{class: cycle('label') }
+          = link_to style.name, dashboard_entities_path(style_id: style.id)
 
 = link_to gly_icon(:plus) + "上传模型", new_dashboard_entity_path, class: 'btn btn-primary pull-right'
 

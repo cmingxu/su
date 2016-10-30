@@ -22,10 +22,10 @@ class Entity < ActiveRecord::Base
   belongs_to :category
   belongs_to :style
 
-  validates :name, presence: true
-  validates :name, uniqueness: { scope: :user_id }
-  validates :skp_file, presence: true
-  validates :icon, presence: true
+  validates :name, presence: { message: '名称不能空' }
+  validates :name, uniqueness: { scope: :user_id, message:  '名称冲突'}
+  validates :skp_file, presence: { message: '必须上传' }
+  validates :icon, presence: { message: '必须上传' }
 
   scope :site_level, -> { where(is_system: true) }
   scope :visible, -> { where(visible: true) }

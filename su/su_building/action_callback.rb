@@ -18,13 +18,20 @@ module ActionCallback
 
   def base64_icon(icon_path)
     return "" if icon_path == ""
-    base64string = Base64.encode64(File.read(icon_path)).gsub("\n", "")
+    $logger.debug File.read(icon_path).length
+    file = File.open(icon_path, "rb")
+    $logger.debug file.read.length
+    file.rewind
+    base64string = Base64.encode64(file.read).gsub("\n", "")
+    file.close
     "data:image/png;base64,#{base64string}"
   end
 
   def local_models
     Dir.glob($SKP_PATH + File::Separator + "*.skp").map do |f|
       icon_path = File.join($SKP_PATH, File.basename(f).split(".")[0] + ".png")
+      $logger.debug icon_path
+      $logger.debug File.exists?(icon_path)
       {
         :name => File.basename(f),
         :skp_file_size => humanize_file_size(File.stat(f).size),
@@ -119,6 +126,8 @@ module ActionCallback
 
     dialog.add_action_callback('remove_local_component_definition') do |action, params|
       $logger.debug "remove model #{params}"
+      $logger.debug "remove #{File.join($SKP_PATH, params)}"
+      $logger.debug "remove #{File.join($SKP_PATH, params.sub('.skp', '.png'))}"
       FileUtils.rm_rf File.join($SKP_PATH, params)
       FileUtils.rm_rf File.join($SKP_PATH, params.sub(".skp", ".png"))
 
@@ -173,11 +182,17 @@ module ActionCallback
         component_definition.save_thumbnail(tmp_thumbnail_file_path)
 
         FileUtils.cp tmp_thumbnail_file_path, thumbnail_file_path
+        FileUtils.rm_rf tmp_thumbnail_file_path
         $logger.debug thumbnail_file_path
         file = File.open(thumbnail_file_path, "rb")
         file.rewind()
         $logger.debug file.read.length
         file.rewind()
+        file.fsync
+        file.rewind()
+        $logger.debug file.read.length
+        file.rewind()
+        file.fsync
         base64string = Base64.encode64(file.read).gsub("\n", "")
         $logger.debug base64string
         file.close
@@ -238,10 +253,13 @@ module ActionCallback
       skp_file_path = params.split('|')[0]
       f = File.open(File.join($SKP_PATH, "s_#{File.basename(skp_file_path)}"), "w")
       f << open(BuildingUI::HOST + skp_file_path).read
+      f.fsync
       f.close
 
       icon_file_path = params.split('|')[1]
+
       f = File.open(File.join($SKP_PATH, "s_#{File.basename(icon_file_path)}"), "w")
+      f.fsync
       f << open(BuildingUI::HOST + icon_file_path).read
       f.close
 
@@ -257,6 +275,7 @@ module ActionCallback
       icon_file_path = params.split('|')[1]
       f = File.open(File.join($SKP_PATH, "s_#{File.basename(icon_file_path)}"), "w")
       f << open(BuildingUI::HOST + icon_file_path).read
+      f.fsync
       f.close
 
       update_js_value(dialog, "local_models", local_models.to_json)
