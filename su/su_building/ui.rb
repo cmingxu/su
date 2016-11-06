@@ -1,4 +1,12 @@
+Sketchup::require File.join(File.dirname(__FILE__), 'core')
+Sketchup::require File.join(File.dirname(__FILE__), 'actions', 'base')
+
+$ACTIONS.each do |action|
+  Sketchup::require File.join(File.dirname(__FILE__), 'actions', action)
+end
+
 Sketchup::require File.join(File.dirname(__FILE__), 'action_callback')
+Sketchup::require File.join(File.dirname(__FILE__), 'context')
 
 class BuildingUI
   HEIGHT = 600
@@ -7,42 +15,43 @@ class BuildingUI
   TOP = 100
 
   #HOST = "http://182.92.78.92"
-  #HOST = "http://localhost:3000"
-  HOST = "http://114.55.130.152"
+  LOCAL_HOST = "localhost:3000"
+  REMOTE_HOST = "114.55.130.152"
   #HOST = "http://baidu.com"
-
-  attr_accessor :my_dialog
-  attr_accessor :action_callbacks
+  #
+  attr_accessor :ctx
 
   def initialize
-    $logger.debug "BuildingUI show"
-    @my_dialog = UI::WebDialog.new("构建中国", true, "", WIDTH, HEIGHT, LEFT, TOP, true)
-    @action_callbacks = []
-    @my_dialog.set_url  "#{HOST}/plugin"
-    @my_dialog.allow_actions_from_host HOST
+    @ctx = Context.new
+    @ctx.logger = $logger
+    @ctx.dialog = setup_dialog
 
-    @my_dialog.min_height = @my_dialog.max_height = HEIGHT
-    @my_dialog.min_width = @my_dialog.max_width = WIDTH
-    ActionCallback.register_callbacks(@my_dialog)
+    @ctx.add_action_callback
   end
 
+  def host
+    $SU_ENV == "development"  ? LOCAL_HOST : REMOTE_HOST
+  end
+
+  def setup_dialog
+    dialog = UI::WebDialog.new("构建中国", true, "", WIDTH, HEIGHT, LEFT, TOP, true)
+    dialog.allow_actions_from_host self.host
+    $logger.debug self.host
+
+    $logger.debug "#{$ROOT_PATH}/web/index.html"
+    dialog.set_file "#{$ROOT_PATH}/web/index.html"
+
+
+    dialog.min_height = dialog.max_height = HEIGHT
+    dialog.min_width = dialog.max_width = WIDTH
+
+    dialog
+  end
 
   def show
-    $logger.debug "show"
-    @my_dialog.show
-  end
-
-end
-
-class TestDialog
-  def test
-    height = 600
-    width = 800
-    left = 100
-    top = 100
-    host = "http://localhost:3000"
-    my_dialog = UI::WebDialog.new("构建中国", true, "", width, height, left, top, true)
-    my_dialog.set_url  "#{host}/plugin"
-    my_dialog.show
+    ctx.logger.debug "#{$ROOT_PATH}/web/index.html"
+    ctx.logger.debug "show_modal"
+    ctx.dialog.show_modal
   end
 end
+

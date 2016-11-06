@@ -79,6 +79,8 @@ gem 'simple_form'
 gem 'awesome_nested_set'
 gem 'annotate', github: 'ctran/annotate_models'
 gem 'jquery-turbolinks'
+gem 'rack-cors',
+  :require => 'rack/cors'
 
 
 

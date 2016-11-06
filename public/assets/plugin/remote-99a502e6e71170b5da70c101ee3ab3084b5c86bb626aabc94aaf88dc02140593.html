@@ -1,0 +1,53 @@
+<div class='uk-width-medium-1-1 su_models_header'>
+  <ul class='uk-tab' data-uk-tab='{connect: "#tabs"}'>
+    <li>
+      <a ui-sref='attributes'>属性</a>
+    </li>
+    <li>
+      <a ui-sref='local'>本地</a>
+    </li>
+    <li class='uk-active'>
+      <a>远程</a>
+    </li>
+    <li>
+      <a ui-sref='system'>构建中国</a>
+    </li>
+  </ul>
+  <div class='uk-margin-right uk-medium-widht-1-3' id='search_area'>
+    <input class='uk-form-small' name='search'>
+    <span>
+      <i class='uk-icon-user'></i>
+    </span>
+  </div>
+  <ul class='uk-switcher uk-margin' id='tabs'>
+    <li></li>
+    <li></li>
+    <li class='uk-active'>
+      <div class='models su_system_models'>
+        <div class='model_item' ng-repeat='model in remote_models track by model.uuid'>
+          <div class='model_icon'>
+            <img height='50' ng-src='{{model.icon}}' width='40'>
+          </div>
+          <div class='model_details'>
+            <div class='model_name'>
+              <strong>{{model.name}}</strong>
+            </div>
+            <div class='model_desc'>
+              <span class='model_size'>
+                {{model.skp_file_size}}
+              </span>
+              <span class='model_buttons uk-float-right'>
+                <button class='uk-button uk-button-success' ng-click="download_from_remote(model.skp_file + '|' + model.icon)">下载</button>
+                <button class='uk-button uk-button-success' ng-click='delete_remote(model.name, model.uuid)'>删除</button>
+              </span>
+            </div>
+            <div class='model_created_time'>
+              {{model.created_at_normal}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li></li>
+  </ul>
+</div>

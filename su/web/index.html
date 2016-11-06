@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='width=device-width, initial-scale=1' name='viewport'>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta content='IE=edge' http-equiv='X-UA-Compatible'>
+    <script>
+      (function() {
+        window.name_config = {
+          "A": {
+            "_name": "幕墙系统",
+            "W": "玻璃幕墙",
+            "Q": "干挂系统",
+            "H": "虚实组合",
+            "G": "幕墙构造"
+          },
+          "B": {
+            "_name": "门窗系统",
+            "M": "柱子",
+            "Q": "墙体",
+            "A": "幕墙",
+            "W": "门窗",
+            "L": "装饰线条"
+          },
+          "C": {
+            "_name": "住宅",
+            "Q": "墙体",
+            "W": "门窗",
+            "S": "阳台栏杆",
+            "B": "百叶",
+            "M": "装饰柱",
+            "L": "装饰线条"
+          },
+          "G": {
+            "_name": "构建体系",
+            "Y": "雨棚"
+          }
+        };
+      
+        window.material_config = {
+          "fs": "真石漆",
+          "mz": "面砖",
+          "sc": "石材",
+          "js": "金属",
+          "bl": "玻璃",
+          "tb": "陶板"
+        };
+      
+        window.attributes_config = {
+          "lenx": {
+            "display": "组件宽度",
+            "type": "input",
+            "editable": true
+          },
+          "leny": {
+            "display": "组件进深",
+            "type": "input",
+            "editable": true
+          },
+          "lenz": {
+            "display": "组件高度",
+            "type": "input",
+            "editable": true
+          },
+          "rotz": {
+            "display": "组件角度",
+            "type": "input",
+            "editable": true
+          },
+          "h": {
+            "display": "建筑层高",
+            "type": "input",
+            "editable": true
+          },
+          "hn": {
+            "display": "建筑层数",
+            "type": "input",
+            "editable": true
+          },
+          "h(%d+)": {
+            "display": "parseInt($1)层层数",
+            "type": "input",
+            "editable": true
+          },
+          "l": {
+            "display": "建筑梁高",
+            "type": "input",
+            "editable": true
+          },
+          "mk": {
+            "display": "门窗宽度",
+            "type": "input",
+            "editable": true
+          },
+          "ml": {
+            "display": "门窗间距",
+            "type": "input",
+            "editable": true
+          },
+          "mn": {
+            "display": "门窗数量",
+            "type": "input",
+            "editable": true
+          },
+          "ms": {
+            "display": "门窗进深",
+            "type": "input",
+            "editable": true
+          },
+          "mh": {
+            "display": "门窗进深",
+            "type": "input",
+            "editable": true
+          },
+          "kz": {
+            "display": "左侧控制项",
+            "type": "input",
+            "editable": true
+          },
+          "kzs": {
+            "display": "左侧计算值",
+            "type": "input",
+            "editable": false
+          },
+          "ky": {
+            "display": "右侧控制项",
+            "type": "input",
+            "editable": true
+          },
+          "kys": {
+            "display": "右侧计算值",
+            "type": "input",
+            "editable": false
+          },
+          "ks": {
+            "display": "上部控制项",
+            "type": "input",
+            "editable": true
+          },
+          "kss": {
+            "display": "上部计算值",
+            "type": "input",
+            "editable": false
+          },
+          "kx": {
+            "display": "下部控制项",
+            "type": "input",
+            "editable": true
+          },
+          "kxs": {
+            "display": "下部计算值",
+            "type": "input",
+            "editable": true
+          },
+          "zk": {
+            "display": "轴线跨度",
+            "type": "input",
+            "editable": true
+          },
+          "zz": {
+            "display": "柱子直径",
+            "type": "input",
+            "editable": true
+          },
+          "tk": {
+            "display": "显隐杆件",
+            "type": "select",
+            "editable": true,
+            "options": {
+              "0": "显示杆件",
+              "1": "隐藏杆件"
+            }
+          },
+          "tl": {
+            "display": "栏杆和梁",
+            "type": "select",
+            "editable": true,
+            "options": {
+              "0": "有梁有栏杆",
+              "1": "有梁无栏杆",
+              "2": "无梁无栏杆"
+            }
+          },
+          "tp2": {
+            "display": "拼接方式",
+            "type": "select",
+            "editable": true,
+            "options": {
+              "1": "拼接方式1",
+              "2": "拼接方式2"
+            }
+          },
+          "tp3": {
+            "display": "拼接方式",
+            "type": "select",
+            "editable": true,
+            "options": {
+              "1": "拼接方式1",
+              "2": "拼接方式2",
+              "3": "拼接方式3"
+            }
+          },
+          "tp4": {
+            "display": "拼接方式",
+            "type": "select",
+            "editable": true,
+            "options": {
+              "1": "拼接方式1",
+              "2": "拼接方式2",
+              "3": "拼接方式3",
+              "4": "拼接方式4"
+            }
+          },
+          "tp5": {
+            "display": "拼接方式",
+            "type": "select",
+            "editable": true,
+            "options": {
+              "1": "拼接方式1",
+              "2": "拼接方式2",
+              "3": "拼接方式3",
+              "4": "拼接方式4",
+              "5": "拼接方式5"
+            }
+          },
+          "tw2": {
+            "display": "错位方式",
+            "type": "select",
+            "editable": true,
+            "options": {
+              "1": "错位方式1",
+              "2": "错位方式2"
+            }
+          },
+          "tw3": {
+            "display": "错位方式",
+            "type": "select",
+            "editable": true,
+            "options": {
+              "1": "错位方式1",
+              "2": "错位方式2",
+              "3": "错位方式3"
+            }
+          },
+          "tw4": {
+            "display": "错位方式",
+            "type": "select",
+            "editable": true,
+            "options": {
+              "1": "错位方式1",
+              "2": "错位方式2",
+              "3": "错位方式3",
+              "4": "错位方式4"
+            }
+          },
+          "tw5": {
+            "display": "错位方式",
+            "type": "select",
+            "editable": true,
+            "options": {
+              "1": "错位方式1",
+              "2": "错位方式2",
+              "3": "错位方式3",
+              "4": "错位方式4",
+              "5": "错位方式5"
+            }
+          }
+        };
+      
+      }).call(this);
+    </script>
+    <script src="./assets/plugin.js"></script>
+    <link rel="stylesheet" media="screen" href="./assets/plugin.css" />
+    <meta name="csrf-param" content="authenticity_token" />
+    <meta name="csrf-token" content="GvwC9ExTn/JeUgJIeyH81ar3UkfmT3iJVq63L62O++UK4RjPMGy2njb91+eTBpcgMPJbwHKXGrH7pdzLHpvwEA==" />
+  </head>
+  <body ng-app='building'>
+    <div class='uk-container uk-container-center su-container' ng-controller='Main'>
+      <div class='data-channel'>
+        <input id='data_transfer_channel' type='hidden'>
+      </div>
+      <div class='uk-grid' id='model_profile'>
+        <div class='uk-width-1-3' ng-show='current_entity.type'>
+          <img class='data-uk-margin' ng-src='{{current_entity.thumbnail_src}}' width='123'>
+        </div>
+        <div class='uk-width-2-3' ng-show='current_entity.type'>
+          <form class="uk-form" action="" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="IJ2rbit4zv4DNf+upc8QAWpjZkxK4E4E39ul5PFAGha20lbHgi2mAddka3gPJ7StXWRImoW6DIhRXTZxj/KvQQ==" />
+                    <input class='uk-form-small uk-margin-bottom uk-float-right fc-name-field' ng-model='readable_name(current_entity.name)'>
+                    <div class='uk-clearfix'></div>
+          </form>
+          <div id='action_bar'>
+            <button class='uk-button uk-button-small uk-primary uk-float-right uk-margin-right' ng-click="bridge('save_current_component_definition')" ng-disabled="{{!current_entity.name &amp;&amp; current_entity.type == 'component_definition'}}">保存</button>
+            <button class='uk-button uk-button-small uk-primary uk-float-right uk-margin-right' ng-click="goto_page('/attributes')" ng-disabled="{{current_entity.type == 'component_definition'}}">属性</button>
+          </div>
+        </div>
+        <div class='uk-width-3-3' ng-show='!current_entity.type'>
+          <div class='uk-alert uk-alert-success uk-text-center'>请选择一个模型</div>
+        </div>
+      </div>
+      <div id='models'>
+        <div ui-view></div>
+      </div>
+      <div class='uk-container' id='user_profile'>
+        <div ng-show='!CurrentUser.isLogin()'>
+          <button class='uk-button uk-button-primary uk-float-right uk-margin-right' ui-sref='register'>我要注册</button>
+          <button class='uk-button uk-button-primary uk-float-right uk-margin-right' ui-sref='login'>我要登录</button>
+        </div>
+        <div ng-show='CurrentUser.isLogin()'>
+          <button class='uk-button uk-button-primary' ng-click='sign_out()'>退出</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

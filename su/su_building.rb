@@ -2,23 +2,27 @@ require 'sketchup'
 require 'fileutils'
 require 'logger'
 
-# global varible set app in debuging mode or not
-#SKETCHUP_CONSOLE.show
-#
-
-
-
-
 
 
 $PLATFORM = (RUBY_PLATFORM =~ /darwin/ ? "MACOS" : "WINDOWS")
-# directory we working on
-$ROOT_PATH = File.expand_path(File.join(File.dirname(__FILE__), "su_building"))
 
-# add ruby file path into loading pathes
+$ROOT_PATH = File.expand_path(File.join(File.dirname(__FILE__), "su_building"))
 $LOAD_PATH.push($ROOT_PATH)
 
-$INSTALL_PATH = File.expand_path(File.join($ROOT_PATH , "..", ".."))
+$ACTIONS = %w(
+current_component_definition_name_change
+download_from_remote
+download_from_system
+initialization
+list_attribute_dictionaries
+logger
+lost_local_skps
+remove_local_component_definition
+replace_by_name
+save_current_component_definition
+update_attribute
+upload_local_model
+)
 
 # load required rb files
 
@@ -37,12 +41,11 @@ FileUtils.chmod(0777, $SKP_PATH)
 $logger = Logger.new File.join($TMP_FILE_PATH,  "logger.log")
 $logger.debug "Initializing APP"
 
-$logger.debug $LOAD_PATH
-
 require 'sketchup.rb'
 require 'extensions.rb'
 extension_name = "构建中国"
 ui_file = File.exists?(File.join($ROOT_PATH, "ui.rb")) ? "su_building/ui.rb" : "su_building/ui.rbs"
+$SU_ENV = ui_file.end_with?("rb") ? "development" : "production"
 
 fs_extension = SketchupExtension.new(
   extension_name, ui_file)
@@ -53,7 +56,7 @@ fs_extension.copyright = "2014, 构建中国"
 Sketchup.register_extension fs_extension, true
 
 
-UI.menu("Plugins").add_item("构建中国") do
+UI.menu("Plugins").add_item("GJZG") do
   BuildingUI.new.show
 end
 

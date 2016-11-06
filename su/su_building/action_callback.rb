@@ -4,60 +4,10 @@ Sketchup::require 'open-uri'
 Sketchup::require 'net/http'
 
 module ActionCallback
-  def humanize_file_size(size)
-    if size > 2 ** 30
-      sprintf "%.1fG" % (size.to_f / 2 ** 30)
-    elsif size > 2 ** 20
-      sprintf "%.1fM" % (size.to_f / 2 ** 20)
-    elsif size > 2 ** 10
-      sprintf "%.1fK" % (size.to_f / 2 ** 10)
-    else
-      sprintf "%d" % size
-    end
-  end
-
-  def base64_icon(icon_path)
-    return "" if icon_path == ""
-    $logger.debug File.read(icon_path).length
-    file = File.open(icon_path, "rb")
-    $logger.debug file.read.length
-    file.rewind
-    base64string = Base64.encode64(file.read).gsub("\n", "")
-    file.close
-    "data:image/png;base64,#{base64string}"
-  end
-
-  def local_models
-    Dir.glob($SKP_PATH + File::Separator + "*.skp").map do |f|
-      icon_path = File.join($SKP_PATH, File.basename(f).split(".")[0] + ".png")
-      $logger.debug icon_path
-      $logger.debug File.exists?(icon_path)
-      {
-        :name => File.basename(f),
-        :skp_file_size => humanize_file_size(File.stat(f).size),
-        :created_at_normal => File.stat(f).ctime.strftime("%m月%d日"),
-        :icon => base64_icon(File.exists?(icon_path) ? icon_path : ""),
-        :path => f
-      }
-    end
-  end
-
-  def update_js_value(dialog, id, new_val)
-    js_command = "var dom = document.getElementById('data_transfer_channel'); var scope = angular.element(dom).scope(); scope.$apply(function() { scope.#{id} = JSON.parse('#{new_val}');});"
-    $logger.debug js_command
-    dialog.execute_script(js_command)
-  end
 
   def register_callbacks(dialog)
-    dialog.add_action_callback('logger') do |action, params|
-      $logger.debug params
-    end
 
     dialog.add_action_callback('list_local_skps') do |action, params|
-      files = Dir.glob($SKP_PATH + File::Separator + "*").map do |f|
-        File.basename(f)
-      end
-      update_js_value(dialog, "skp_names", files.join(","))
     end
 
     dialog.add_action_callback('save_current_component_definition') do |action, params|
@@ -159,59 +109,6 @@ module ActionCallback
     end
 
     dialog.add_action_callback('initialization') do |action, params|
-      model = Sketchup.active_model
-      selection = model.selection.first
-      current_entity = {}
-      case selection
-      when NilClass
-      when Sketchup::Edge
-        current_entity = {:name => "Edge", :thumbnail_src => 'thumbnail.png', :type => "edge", :dynamic_attributes => {}}
-      when Sketchup::ComponentInstance
-        component_definition  = selection.definition
-        dynamic_attributes = selection.attribute_dictionary("dynamic_attributes")
-        component_definition_name = dynamic_attributes["_name"] if dynamic_attributes
-
-        hash = {}
-        dynamic_attributes.each_pair do |k, v|
-          hash[k] = v
-        end
-
-        tmp_thumbnail_file_path = File.join($SKP_PATH, 'tmp_thumbnail.png')
-        thumbnail_file_path = File.join($SKP_PATH, 'thumbnail.png')
-        component_definition.refresh_thumbnail
-        component_definition.save_thumbnail(tmp_thumbnail_file_path)
-
-        FileUtils.cp tmp_thumbnail_file_path, thumbnail_file_path
-        FileUtils.rm_rf tmp_thumbnail_file_path
-        $logger.debug thumbnail_file_path
-        file = File.open(thumbnail_file_path, "rb")
-        file.rewind()
-        $logger.debug file.read.length
-        file.rewind()
-        file.fsync
-        file.rewind()
-        $logger.debug file.read.length
-        file.rewind()
-        file.fsync
-        base64string = Base64.encode64(file.read).gsub("\n", "")
-        $logger.debug base64string
-        file.close
-
-
-        thumbnail_src = "data:image/png;base64,#{base64string}"
-        current_entity = {:name => component_definition_name || component_definition.name,
-                          :thumbnail_src => thumbnail_src,
-                          :type => "component_definition",
-                          :dynamic_attributes => hash }
-      when Sketchup::Group
-      when Sketchup::Face
-      end
-
-      # initiate current_model
-      update_js_value(dialog, "current_entity", current_entity.to_json)
-
-      # initiate local skps files
-      update_js_value(dialog, "local_models", local_models.to_json)
     end
 
     dialog.add_action_callback('list_attribute_dictionaries') do |action, params|
@@ -283,7 +180,7 @@ module ActionCallback
   end
 
 
-  module_function :update_js_value, :register_callbacks, :local_models, :base64_icon, :humanize_file_size
+  #module_function :update_js_value, :register_callbacks, :local_models, :base64_icon, :humanize_file_size
 end
 
 

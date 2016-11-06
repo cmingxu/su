@@ -11,6 +11,14 @@
 
 building = angular.module "building", ['ngResource', 'ui.router', 'templates', 'ngCookies' ]
 
+<%- if Rails.env.production? %>
+building.constant('ApiUrl', 'http://localhost:3000')
+<%- end %>
+
+<%- if Rails.env.development? %>
+building.constant('ApiUrl', 'http://localhost:3000')
+<%- end %>
+
 building.config ['$httpProvider', ($httpProvider) ->
   $httpProvider.defaults.headers.common['Content-Type'] = 'application/json'
   $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
@@ -21,32 +29,32 @@ building.config ['$stateProvider', '$urlRouterProvider', ($stateProvider, $urlRo
   $stateProvider.state 'attributes',
     url: "/attributes"
     controller: 'Attributes'
-    templateUrl: '<%= asset_path 'plugin/attributes.html' %>'
+    templateUrl: './assets/plugin/attributes.html'
 
   $stateProvider.state 'local',
     url: "/local"
     controller: 'Local'
-    templateUrl: '<%= asset_path 'plugin/local.html' %>'
+    templateUrl: './assets/plugin/local.html'
 
   $stateProvider.state 'system',
     url: "/system"
     controller: 'System'
-    templateUrl: '<%= asset_path 'plugin/system.html' %>'
+    templateUrl: './assets/plugin/system.html'
 
   $stateProvider.state 'remote',
     url: "/remote"
     controller: 'Remote'
-    templateUrl: '<%= asset_path 'plugin/remote.html' %>'
+    templateUrl: './assets/plugin/remote.html'
 
   $stateProvider.state 'login',
     url: "/login"
     controller: 'Login'
-    templateUrl: '<%= asset_path 'plugin/login.html' %>'
+    templateUrl: './assets/plugin/login.html'
 
   $stateProvider.state 'register',
     url: "/register"
     controller: 'Register'
-    templateUrl: '<%= asset_path 'plugin/register.html' %>'
+    templateUrl: './assets/plugin/register.html'
 ]
 
 building.directive 'su-number-format', ['$filter', ($filter) ->
@@ -60,17 +68,18 @@ building.directive 'su-number-format', ['$filter', ($filter) ->
     ctrl.$parser.push parse
 ]
 
-building.factory "Entity", ['$resource', ($resource) ->
+building.factory "Entity", ['$resource', ($resource, ApiUrl) ->
   $resource("/api/entities/:id", {id: '@id'}, {
     index:
       method: 'GET'
       isArray: true
+      url: ApiUrl + "/api/entities"
     mine:
-      url: "/api/entities/mine"
+      url: ApiUrl + "/api/entities/mine"
       method: 'GET'
       isArray: true
     remove_enetity:
-      url: "/api/entities/:uuid"
+      url: ApiUrl + "/api/entities/:uuid"
       method: 'DELETE'
   })
 ]
@@ -142,8 +151,11 @@ building.controller "Remote", ['CurrentUser', '$scope', '$http', '$interval', "E
       $scope.remote_models = data
 ]
 
-building.controller "Login", ['$scope', '$http', ($scope, $http) ->
+building.controller "Login", ['$scope', '$http', 'ApiUrl', ($scope, $http, ApiUrl) ->
   $scope.current_user = {}
+
+
+
   $scope.login = ()->
     if !$scope.current_user.mobile or !$scope.current_user.mobile.match(/^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/)
       alert "手机号码格式不正确"
@@ -152,14 +164,14 @@ building.controller "Login", ['$scope', '$http', ($scope, $http) ->
       alert "密码不正确"
       return
 
-    $http.post("/api/users/login", {user: $scope.current_user}).success (response) ->
+    $http.post(ApiUrl + "/api/users/login", {user: $scope.current_user}).success (response) ->
       if response.status == "fail"
         alert response.message
       else
         window.location.hash = "/local"
 ]
 
-building.controller "Register", ['$scope', '$http', ($scope, $http) ->
+building.controller "Register", ['$scope', '$http', 'ApiUrl', ($scope, $http, ApiUrl) ->
   $scope.current_user = {}
   $scope.register = ()->
     if !$scope.current_user.mobile or !$scope.current_user.mobile.match(/^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/)
@@ -172,7 +184,7 @@ building.controller "Register", ['$scope', '$http', ($scope, $http) ->
       alert "两次密码不一致"
       return
 
-    $http.post("/api/users", {user: $scope.current_user}).success (response, status, headers) ->
+    $http.post(ApiUrl + "/api/users", {user: $scope.current_user}).success (response, status, headers) ->
       if response.status == "fail"
         alert response.message
       else
@@ -184,6 +196,7 @@ building.controller "System", ['$scope', '$http', '$interval', "Entity", ($scope
   $scope.current_entity = {}
   $scope.system_models = {}
   Entity.index (data) ->
+    alert data
     $scope.system_models = data
 
 ]

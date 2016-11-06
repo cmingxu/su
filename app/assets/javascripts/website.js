@@ -14,6 +14,5 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require c3
-//= require c3
 //= require bootstrap/dist/js/bootstrap.min
 
