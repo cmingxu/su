@@ -6476,17 +6476,6 @@ angular.module("templates").run(["$templateCache", function($templateCache) {
         });
       };
       return $timeout(function() {
-        var fail, success;
-        success = function(resp) {
-          return alert("success" + resp);
-        };
-        fail = function(resp) {
-          return alert("fail" + resp);
-        };
-        alert('xx');
-        $http.get('http://foobar.com:3000').success(function(data) {
-          return alert(data);
-        });
         return $scope.bridge('initialization', 200);
       });
     }
