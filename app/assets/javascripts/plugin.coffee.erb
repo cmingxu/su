@@ -90,7 +90,6 @@ building.factory 'CurrentUser', ['$cookies', 'CURRENT_USER', ($cookies, CURRENT_
     currentUser = {}
 
     currentUser.isLogin      = -> $cookies.get('auth_token')?
-    currentUser.hasAuthToken = -> $cookies.get('auth_token')?
     currentUser.authToken    = -> $cookies.get('auth_token')
 
     currentUser
@@ -164,11 +163,13 @@ building.controller "Login", ['$scope', '$http', 'ApiUrl', ($scope, $http, ApiUr
       alert "密码不正确"
       return
 
-    $http.post(ApiUrl + "/api/users/login", {user: $scope.current_user}).success (response) ->
-      if response.status == "fail"
-        alert response.message
-      else
-        window.location.hash = "/local"
+    $scope.bridge "login", $scope.current_user.mobile + "|" + $scope.current_user.password
+
+    <%#$http.post(ApiUrl + "/api/users/login", {user: $scope.current_user}).success (response) ->%>
+      <%#if response.status == "fail"%>
+        <%#alert response.message%>
+      <%#else%>
+        <%#window.location.hash = "/local"%>
 ]
 
 building.controller "Register", ['$scope', '$http', 'ApiUrl', ($scope, $http, ApiUrl) ->
@@ -195,6 +196,7 @@ building.controller "Register", ['$scope', '$http', 'ApiUrl', ($scope, $http, Ap
 building.controller "System", ['$scope', '$http', '$interval', "Entity", ($scope, $http, $interval, Entity) ->
   $scope.current_entity = {}
   $scope.system_models = {}
+  $scope.current_user = {}
   Entity.index (data) ->
     alert data
     $scope.system_models = data

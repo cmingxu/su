@@ -6256,9 +6256,6 @@ angular.module("templates").run(["$templateCache", function($templateCache) {
       currentUser.isLogin = function() {
         return $cookies.get('auth_token') != null;
       };
-      currentUser.hasAuthToken = function() {
-        return $cookies.get('auth_token') != null;
-      };
       currentUser.authToken = function() {
         return $cookies.get('auth_token');
       };
@@ -6364,15 +6361,7 @@ angular.module("templates").run(["$templateCache", function($templateCache) {
           alert("密码不正确");
           return;
         }
-        return $http.post(ApiUrl + "/api/users/login", {
-          user: $scope.current_user
-        }).success(function(response) {
-          if (response.status === "fail") {
-            return alert(response.message);
-          } else {
-            return window.location.hash = "/local";
-          }
-        });
+        return $scope.bridge("login", $scope.current_user.mobile + "|" + $scope.current_user.password);
       };
     }
   ]);
@@ -6410,6 +6399,7 @@ angular.module("templates").run(["$templateCache", function($templateCache) {
     '$scope', '$http', '$interval', "Entity", function($scope, $http, $interval, Entity) {
       $scope.current_entity = {};
       $scope.system_models = {};
+      $scope.current_user = {};
       return Entity.index(function(data) {
         alert(data);
         return $scope.system_models = data;

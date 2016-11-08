@@ -3,16 +3,21 @@ namespace :plugin do
     plugin_path = Rails.root.join('su')
     tmp_path    = Rails.root.join('tmp')
 
+    sh "rm -rf #{tmp_path}"
+    sh "mkdir #{tmp_path}"
+
     sh "rm -f #{plugin_path}/su.rbz"
     sh "rm -f #{tmp_path}/su/su.rbz"
     `find #{plugin_path.to_s} -name "*.rb"`.split().each do |f|
       `./bin/Scrambler #{f}`
     end
 
-    sh "mkdir -p #{tmp_path}/su/su_building/"
+    sh "mkdir -p #{tmp_path}/su/su_building/actions"
     `find #{plugin_path.to_s} -name "*.rbs"`.split().each do |f|
        sh "mv #{f} #{tmp_path}/su/#{Pathname.new(f).relative_path_from(plugin_path)}"
     end
+
+    sh "cp -r #{plugin_path.join('web')} #{tmp_path}/su/su_building"
 
     sh "cd #{tmp_path}/su && zip -r su.rbz * && cd -"
     sh "mv #{tmp_path}/su/su.rbz #{plugin_path}/"

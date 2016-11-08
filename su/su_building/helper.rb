@@ -1,4 +1,17 @@
+require 'net/http'
+
 module Helper
+  def post uri, body, header = nil
+    http = Net::HTTP.new(uri.host, uri.port)
+    req = Net::HTTP::Post.new(uri.path, 'Content-Type' => 'application/json')
+    req.body = body
+    http.request(req)
+  end
+
+  def get uri
+    Net::HTTP.get uri
+  end
+
   def humanize_file_size(size)
     if size > 2 ** 30
       sprintf "%.1fG" % (size.to_f / 2 ** 30)
@@ -13,9 +26,7 @@ module Helper
 
   def base64_icon(icon_path)
     return "" if icon_path == ""
-    $logger.debug File.read(icon_path).length
     file = File.open(icon_path, "rb")
-    $logger.debug file.read.length
     file.rewind
     base64string = Base64.encode64(file.read).gsub("\n", "")
     file.close
@@ -25,8 +36,6 @@ module Helper
   def local_models
     Dir.glob($SKP_PATH + File::Separator + "*.skp").map do |f|
       icon_path = File.join($SKP_PATH, File.basename(f).split(".")[0] + ".png")
-      $logger.debug icon_path
-      $logger.debug File.exists?(icon_path)
       {
         :name => File.basename(f),
         :skp_file_size => humanize_file_size(File.stat(f).size),

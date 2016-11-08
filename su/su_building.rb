@@ -47,6 +47,10 @@ extension_name = "构建中国"
 ui_file = File.exists?(File.join($ROOT_PATH, "ui.rb")) ? "su_building/ui.rb" : "su_building/ui.rbs"
 $SU_ENV = ui_file.end_with?("rb") ? "development" : "production"
 
+LOCAL_HOST = "localhost:3000"
+REMOTE_HOST = "114.55.130.152"
+$SU_HOST = $SU_ENV == "development"  ? LOCAL_HOST : REMOTE_HOST
+
 fs_extension = SketchupExtension.new(
   extension_name, ui_file)
 fs_extension.version = "0.0.1"

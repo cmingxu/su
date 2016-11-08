@@ -11,6 +11,7 @@ class Context
   include Helper
 
   attr_accessor :logger, :dialog
+  attr_accessor :current_user
 
   def update_js_value(dialog, id, new_val)
     js_command = "var dom = document.getElementById('data_transfer_channel'); var scope = angular.element(dom).scope(); scope.$apply(function() { scope.#{id} = JSON.parse('#{new_val}');});"
