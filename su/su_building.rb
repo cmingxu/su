@@ -45,6 +45,8 @@ require 'sketchup.rb'
 require 'extensions.rb'
 extension_name = "构建中国"
 ui_file = File.exists?(File.join($ROOT_PATH, "ui.rb")) ? "su_building/ui.rb" : "su_building/ui.rbs"
+
+Sketchup::require File.join(File.dirname(__FILE__), ui_file)
 $SU_ENV = ui_file.end_with?("rb") ? "development" : "production"
 
 LOCAL_HOST = "localhost:3000"

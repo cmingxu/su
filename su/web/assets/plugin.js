@@ -6175,32 +6175,32 @@ angular.module("templates").run(["$templateCache", function($templateCache) {
       $stateProvider.state('attributes', {
         url: "/attributes",
         controller: 'Attributes',
-        templateUrl: './assets/plugin/attributes.html'
+        templateUrl: 'plugin/attributes.html'
       });
       $stateProvider.state('local', {
         url: "/local",
         controller: 'Local',
-        templateUrl: './assets/plugin/local.html'
+        templateUrl: 'plugin/local.html'
       });
       $stateProvider.state('system', {
         url: "/system",
         controller: 'System',
-        templateUrl: './assets/plugin/system.html'
+        templateUrl: 'plugin/system.html'
       });
       $stateProvider.state('remote', {
         url: "/remote",
         controller: 'Remote',
-        templateUrl: './assets/plugin/remote.html'
+        templateUrl: 'plugin/remote.html'
       });
       $stateProvider.state('login', {
         url: "/login",
         controller: 'Login',
-        templateUrl: './assets/plugin/login.html'
+        templateUrl: 'plugin/login.html'
       });
       return $stateProvider.state('register', {
         url: "/register",
         controller: 'Register',
-        templateUrl: './assets/plugin/register.html'
+        templateUrl: 'plugin/register.html'
       });
     }
   ]);
