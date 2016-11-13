@@ -84,15 +84,34 @@ building.factory "Entity", ['$resource', ($resource, ApiUrl) ->
   })
 ]
 
-building.constant 'CURRENT_USER', 'currentUser'
+building.service 'CurrentUser', ['$q','$timeout', ($q, $timeout) ->
+  this.password = null
+  this.mobile = null
+  this.auth_token = null
+  self = this
+  this.is_login = ()->
+    return self.auth_token != null
 
-building.factory 'CurrentUser', ['$cookies', 'CURRENT_USER', ($cookies, CURRENT_USER) ->
-    currentUser = {}
 
-    currentUser.isLogin      = -> $cookies.get('auth_token')?
-    currentUser.authToken    = -> $cookies.get('auth_token')
+  login = (scope)->
+    scope.defered = $q.defer()
+    scope.reject = (data)->
+      scope.defered.reject(JSON.parse(data))
+    scope.resolve = (data)->
+      scope.defered.resolve(JSON.parse(data))
 
-    currentUser
+    timeoutFun = ->
+      if scope.current_user.http_message != null
+        scope.defered.reject({message: scope.current_user.http_message})
+
+    scope.bridge 'login', this.mobile + "|" + this.password
+    $timeout timeoutFun, 5000
+
+    scope.defered.promise
+
+   this.login = login
+
+   this
   ]
 
 building.controller "Attributes", ['$scope', 'CurrentUser', '$cookies', ($scope, CurrentUser, $cookies) ->
@@ -133,7 +152,7 @@ building.controller "Local", ['$scope', 'CurrentUser', '$cookies', ($scope, Curr
     $cookies.getAll()
 
   $scope.upload_local_model = (model) ->
-    $scope.bridge "upload_local_model", model + "||" + CurrentUser.authToken()
+    $scope.bridge "upload_local_model", model + "||" + CurrentUser.auth_token
 ]
 
 building.controller "Remote", ['CurrentUser', '$scope', '$http', '$interval', "Entity", (CurrentUser, $scope, $http, $interval, Entity) ->
@@ -145,17 +164,15 @@ building.controller "Remote", ['CurrentUser', '$scope', '$http', '$interval', "E
       Entity.remove_enetity {uuid: uuid}, (data) ->
         $scope.remote_models = data
 
-  if CurrentUser.isLogin()
+  if CurrentUser.is_login()
     Entity.mine (data) ->
       $scope.remote_models = data
 ]
 
-building.controller "Login", ['$scope', '$http', 'ApiUrl', ($scope, $http, ApiUrl) ->
+building.controller "Login", ['$scope', 'CurrentUser', ($scope, CurrentUser) ->
   $scope.current_user = {}
-
-
-
-  $scope.login = ()->
+  $scope.login = () ->
+    $scope.current_user.http_message = null
     if !$scope.current_user.mobile or !$scope.current_user.mobile.match(/^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/)
       alert "手机号码格式不正确"
       return
@@ -163,13 +180,16 @@ building.controller "Login", ['$scope', '$http', 'ApiUrl', ($scope, $http, ApiUr
       alert "密码不正确"
       return
 
-    $scope.bridge "login", $scope.current_user.mobile + "|" + $scope.current_user.password
+    loginSuccess = (data)->
+      CurrentUser.auth_token = data.auth_token
+      window.location.hash = '/local'
 
-    <%#$http.post(ApiUrl + "/api/users/login", {user: $scope.current_user}).success (response) ->%>
-      <%#if response.status == "fail"%>
-        <%#alert response.message%>
-      <%#else%>
-        <%#window.location.hash = "/local"%>
+    loginFail = (data)->
+      alert data.http_message
+
+    CurrentUser.mobile = $scope.current_user.mobile
+    CurrentUser.password = $scope.current_user.password
+    CurrentUser.login($scope).then(loginSuccess, loginFail)
 ]
 
 building.controller "Register", ['$scope', '$http', 'ApiUrl', ($scope, $http, ApiUrl) ->
@@ -204,7 +224,8 @@ building.controller "System", ['$scope', '$http', '$interval', "Entity", ($scope
 ]
 
 building.controller "Main", ['$scope', '$http', '$timeout', "Entity", "CurrentUser", ($scope, $http, $timeout, Entity, CurrentUser) ->
-  $scope.CurrentUser = CurrentUser
+  $scope.current_user = CurrentUser
+  $scope.is_login = CurrentUser.is_login
   $scope.current_entity = {}
   $scope.local_models = []
 
@@ -214,6 +235,7 @@ building.controller "Main", ['$scope', '$http', '$timeout', "Entity", "CurrentUs
 
   $scope.readable_name = (code)->
     return "Edge" if code == "Edge"
+    return "" if code == "" or code == undefined
     code = code.split("")
     f = code[0]
     s = code[1]

@@ -1,6 +1,7 @@
 class Api::BaseController < ApplicationController
   protect_from_forgery with: :null_session
   helper_method :current_user
+
   def authenticate!
     response_fail "要先登录哦" if current_user.blank?
   end
@@ -10,6 +11,10 @@ class Api::BaseController < ApplicationController
   end
 
   def index
+  end
+
+  def response_success_with_hash(hash)
+    render json: hash.merge!({status: "ok"})
   end
 
   def response_success(message = "")

@@ -19,6 +19,18 @@ class Context
     dialog.execute_script(js_command)
   end
 
+  def update_resolve(dialog, id, new_val)
+    js_command = "var dom = document.getElementById('#{id}'); var scope = angular.element(dom).scope(); scope.$apply(function() { scope.resolve('#{new_val}');});"
+    logger.debug js_command
+    dialog.execute_script(js_command)
+  end
+
+  def update_reject(dialog, id, new_val)
+    js_command = "var dom = document.getElementById('#{id}'); var scope = angular.element(dom).scope(); scope.$apply(function() { scope.reject('#{new_val}');});"
+    logger.debug js_command
+    dialog.execute_script(js_command)
+  end
+
   def add_action_callback
     $ACTIONS.each do |action|
       dialog.add_action_callback action do |dialog, params|

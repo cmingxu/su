@@ -49,11 +49,11 @@
             -#= image_tag asset_path('mianzhuan.jpg'), height: 60, width: 60, class: 'uk-border-rounded'
 
       #user_profile.uk-container
-        %div{"ng-show" => "!CurrentUser.isLogin()"}
+        %div{"ng-show" => "!is_login()"}
           %button.uk-button.uk-button-primary.uk-float-right.uk-margin-right{"ui-sref" => "register"} 我要注册
           %button.uk-button.uk-button-primary.uk-float-right.uk-margin-right{"ui-sref" => "login"} 我要登录
 
-        %div{"ng-show" => "CurrentUser.isLogin()"}
+        %div{"ng-show" => "is_login()"}
           %button.uk-button.uk-button-primary{"ng-click" => "sign_out()"} 退出
 
 

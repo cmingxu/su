@@ -6124,14 +6124,14 @@ angular.module("templates").run(["$templateCache", function($templateCache) {
 // source: app/assets/templates/plugin/local.html.haml
 
 angular.module("templates").run(["$templateCache", function($templateCache) {
-  $templateCache.put("plugin/local.html", "<div class='uk-width-medium-1-1 su_models_header'>\n  <ul class='uk-tab' data-uk-tab='{connect: \"#tabs\"}'>\n    <li>\n      <a ui-sref='attributes'>属性</a>\n    </li>\n    <li class='uk-active'>\n      <a href=''>本地</a>\n    </li>\n    <li>\n      <a ui-sref='remote'>远程</a>\n    </li>\n    <li>\n      <a ui-sref='system'>构建中国</a>\n    </li>\n  </ul>\n  <div class='uk-margin-right uk-medium-widht-1-3' id='search_area'>\n    <input class='uk-form-small' name='search'>\n    <span>\n      <i class='uk-icon-user'></i>\n    </span>\n  </div>\n  <ul class='uk-switcher uk-margin' id='tabs'>\n    <li class='uk-active'>\n      <div class='models su_local_models'>\n        <div class='uk-width-3-3' ng-show='local_models.length == 0'>\n          <div class='uk-alert uk-alert-success uk-text-center'>本地没有模型</div>\n        </div>\n        <div class='model_item' ng-repeat='model in local_models'>\n          <div class='model_icon'>\n            <img height='50' ng-src='{{model.icon}}' width='40'>\n          </div>\n          <div class='model_details'>\n            <div class='model_name'>\n              <strong>{{model.name}}</strong>\n            </div>\n            <div class='model_desc'>\n              <span class='model_size'>\n                {{model.skp_file_size}}\n              </span>\n              <span class='model_buttons uk-float-right'>\n                <button class='uk-button uk-button-primary' ng-click='replace_by_name(model.name)'>替换</button>\n                <button class='uk-button uk-button-primary' ng-click='remove_local_model(model.name)'>删除</button>\n                <button class='uk-button uk-button-primary' ng-click='upload_local_model(model.name)' ng-if='CurrentUser.isLogin()'>上传</button>\n              </span>\n            </div>\n            <div class='model_created_time'>\n              {{model.created_at_normal}}\n            </div>\n          </div>\n        </div>\n      </div>\n    </li>\n    <li></li>\n    <li></li>\n  </ul>\n</div>")
+  $templateCache.put("plugin/local.html", "<div class='data-channel'>\n  <input id='data_transfer_channel_local' type='hidden'>\n</div>\n<div class='uk-width-medium-1-1 su_models_header'>\n  <ul class='uk-tab' data-uk-tab='{connect: \"#tabs\"}'>\n    <li>\n      <a ui-sref='attributes'>属性</a>\n    </li>\n    <li class='uk-active'>\n      <a href=''>本地</a>\n    </li>\n    <li>\n      <a ui-sref='remote'>远程</a>\n    </li>\n    <li>\n      <a ui-sref='system'>构建中国</a>\n    </li>\n  </ul>\n  <div class='uk-margin-right uk-medium-widht-1-3' id='search_area'>\n    <input class='uk-form-small' name='search'>\n    <span>\n      <i class='uk-icon-user'></i>\n    </span>\n  </div>\n  <ul class='uk-switcher uk-margin' id='tabs'>\n    <li class='uk-active'>\n      <div class='models su_local_models'>\n        <div class='uk-width-3-3' ng-show='local_models.length == 0'>\n          <div class='uk-alert uk-alert-success uk-text-center'>本地没有模型</div>\n        </div>\n        <div class='model_item' ng-repeat='model in local_models'>\n          <div class='model_icon'>\n            <img height='50' ng-src='{{model.icon}}' width='40'>\n          </div>\n          <div class='model_details'>\n            <div class='model_name'>\n              <strong>{{model.name}}</strong>\n            </div>\n            <div class='model_desc'>\n              <span class='model_size'>\n                {{model.skp_file_size}}\n              </span>\n              <span class='model_buttons uk-float-right'>\n                <button class='uk-button uk-button-primary' ng-click='replace_by_name(model.name)'>替换</button>\n                <button class='uk-button uk-button-primary' ng-click='remove_local_model(model.name)'>删除</button>\n                <button class='uk-button uk-button-primary' ng-click='upload_local_model(model.name)' ng-if='CurrentUser.isLogin()'>上传</button>\n              </span>\n            </div>\n            <div class='model_created_time'>\n              {{model.created_at_normal}}\n            </div>\n          </div>\n        </div>\n      </div>\n    </li>\n    <li></li>\n    <li></li>\n  </ul>\n</div>")
 }]);
 
 // Angular Rails Template
 // source: app/assets/templates/plugin/login.html.haml
 
 angular.module("templates").run(["$templateCache", function($templateCache) {
-  $templateCache.put("plugin/login.html", "<ng-form class='uk-form uk-width-1-1 uk-margin login_page'>\n  <fieldset>\n    <legend></legend>\n    <div class='uk-form-row'>\n      <div class='uk-width-1-3 uk-float-left'>手机号码</div>\n      <input class='uk-width-2-3' ng-model='current_user.mobile' placeholder='手机号码'>\n    </div>\n    <div class='uk-form-row'>\n      <div class='uk-width-1-3 uk-float-left'>密码</div>\n      <input class='uk-width-2-3' ng-model='current_user.password' placeholder='密码' type='password'>\n    </div>\n    <div class='uk-form-row'>\n      <button class='uk-button uk-button-success uk-width-3-3' ng-click='login()' type='submit'>登录</button>\n    </div>\n  </fieldset>\n</ng-form>")
+  $templateCache.put("plugin/login.html", "<div class='data-channel'>\n  <input id='data_transfer_channel_login' type='hidden'>\n</div>\n<ng-form class='uk-form uk-width-1-1 uk-margin login_page'>\n  <fieldset>\n    <legend></legend>\n    <div class='uk-form-row'>\n      <div class='uk-width-1-3 uk-float-left'>手机号码</div>\n      <input class='uk-width-2-3' ng-model='current_user.mobile' placeholder='手机号码'>\n    </div>\n    <div class='uk-form-row'>\n      <div class='uk-width-1-3 uk-float-left'>密码</div>\n      <input class='uk-width-2-3' ng-model='current_user.password' placeholder='密码' type='password'>\n    </div>\n    <div class='uk-form-row'>\n      <button class='uk-button uk-button-success uk-width-3-3' ng-click='login()' type='submit'>登录</button>\n    </div>\n  </fieldset>\n</ng-form>")
 }]);
 
 // Angular Rails Template
@@ -6247,19 +6247,38 @@ angular.module("templates").run(["$templateCache", function($templateCache) {
     }
   ]);
 
-  building.constant('CURRENT_USER', 'currentUser');
-
-  building.factory('CurrentUser', [
-    '$cookies', 'CURRENT_USER', function($cookies, CURRENT_USER) {
-      var currentUser;
-      currentUser = {};
-      currentUser.isLogin = function() {
-        return $cookies.get('auth_token') != null;
+  building.service('CurrentUser', [
+    '$q', '$timeout', function($q, $timeout) {
+      var login, self;
+      this.password = null;
+      this.mobile = null;
+      this.auth_token = null;
+      self = this;
+      this.is_login = function() {
+        return self.auth_token !== null;
       };
-      currentUser.authToken = function() {
-        return $cookies.get('auth_token');
+      login = function(scope) {
+        var timeoutFun;
+        scope.defered = $q.defer();
+        scope.reject = function(data) {
+          return scope.defered.reject(JSON.parse(data));
+        };
+        scope.resolve = function(data) {
+          return scope.defered.resolve(JSON.parse(data));
+        };
+        timeoutFun = function() {
+          if (scope.current_user.http_message !== null) {
+            return scope.defered.reject({
+              message: scope.current_user.http_message
+            });
+          }
+        };
+        scope.bridge('login', this.mobile + "|" + this.password);
+        $timeout(timeoutFun, 5000);
+        return scope.defered.promise;
       };
-      return currentUser;
+      this.login = login;
+      return this;
     }
   ]);
 
@@ -6323,7 +6342,7 @@ angular.module("templates").run(["$templateCache", function($templateCache) {
         return $cookies.getAll();
       };
       return $scope.upload_local_model = function(model) {
-        return $scope.bridge("upload_local_model", model + "||" + CurrentUser.authToken());
+        return $scope.bridge("upload_local_model", model + "||" + CurrentUser.auth_token);
       };
     }
   ]);
@@ -6341,7 +6360,7 @@ angular.module("templates").run(["$templateCache", function($templateCache) {
           });
         }
       };
-      if (CurrentUser.isLogin()) {
+      if (CurrentUser.is_login()) {
         return Entity.mine(function(data) {
           return $scope.remote_models = data;
         });
@@ -6350,9 +6369,11 @@ angular.module("templates").run(["$templateCache", function($templateCache) {
   ]);
 
   building.controller("Login", [
-    '$scope', '$http', 'ApiUrl', function($scope, $http, ApiUrl) {
+    '$scope', 'CurrentUser', function($scope, CurrentUser) {
       $scope.current_user = {};
       return $scope.login = function() {
+        var loginFail, loginSuccess;
+        $scope.current_user.http_message = null;
         if (!$scope.current_user.mobile || !$scope.current_user.mobile.match(/^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/)) {
           alert("手机号码格式不正确");
           return;
@@ -6361,7 +6382,16 @@ angular.module("templates").run(["$templateCache", function($templateCache) {
           alert("密码不正确");
           return;
         }
-        return $scope.bridge("login", $scope.current_user.mobile + "|" + $scope.current_user.password);
+        loginSuccess = function(data) {
+          CurrentUser.auth_token = data.auth_token;
+          return window.location.hash = '/local';
+        };
+        loginFail = function(data) {
+          return alert(data.http_message);
+        };
+        CurrentUser.mobile = $scope.current_user.mobile;
+        CurrentUser.password = $scope.current_user.password;
+        return CurrentUser.login($scope).then(loginSuccess, loginFail);
       };
     }
   ]);
@@ -6409,7 +6439,8 @@ angular.module("templates").run(["$templateCache", function($templateCache) {
 
   building.controller("Main", [
     '$scope', '$http', '$timeout', "Entity", "CurrentUser", function($scope, $http, $timeout, Entity, CurrentUser) {
-      $scope.CurrentUser = CurrentUser;
+      $scope.current_user = CurrentUser;
+      $scope.is_login = CurrentUser.is_login;
       $scope.current_entity = {};
       $scope.local_models = [];
       $scope.$watch('current_entity', function(oldV, newV) {
@@ -6419,6 +6450,9 @@ angular.module("templates").run(["$templateCache", function($templateCache) {
         var error, error1, f, n, name, s;
         if (code === "Edge") {
           return "Edge";
+        }
+        if (code === "" || code === void 0) {
+          return "";
         }
         code = code.split("");
         f = code[0];

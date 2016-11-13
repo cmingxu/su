@@ -16,6 +16,7 @@ download_from_system
 initialization
 list_attribute_dictionaries
 logger
+login
 lost_local_skps
 remove_local_component_definition
 replace_by_name

@@ -2,6 +2,7 @@ require 'net/http'
 
 module Helper
   def post uri, body, header = nil
+    $logger.debug "post to #{uri.host}:#{uri.port}/#{uri.path}"
     http = Net::HTTP.new(uri.host, uri.port)
     req = Net::HTTP::Post.new(uri.path, 'Content-Type' => 'application/json')
     req.body = body

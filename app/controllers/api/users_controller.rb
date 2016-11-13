@@ -17,7 +17,7 @@ class Api::UsersController < Api::BaseController
     if @user.save
       cookies[:auth_token] = @user.auth_token
       session[:user_id] = @user.id
-      response_success
+      response_success_with_hash mobile: params[:user][:mobile], auth_token: @user.auth_token
     else
       response_fail(@user.errors.full_messages.first)
     end
@@ -27,8 +27,8 @@ class Api::UsersController < Api::BaseController
     @user = User.find_by_mobile params[:user][:mobile]
     if @user && @user.valid_password?(params[:user][:password])
       session[:user_id] = @user.id
-      cookies[:auth_token] = { :value => @user.auth_token, :expires => 1.hour.from_now } 
-      response_success
+      cookies[:auth_token] = { :value => @user.auth_token, :expires => 1.hour.from_now }
+      response_success_with_hash mobile: params[:user][:mobile], auth_token: @user.auth_token
     else
       response_fail "用户不存在或者密码不正确"
     end

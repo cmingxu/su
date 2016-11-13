@@ -272,7 +272,7 @@
     <script src="./assets/plugin.js"></script>
     <link rel="stylesheet" media="screen" href="./assets/plugin.css" />
     <meta name="csrf-param" content="authenticity_token" />
-    <meta name="csrf-token" content="ie/W5oXr9LHyZ2bkmJ2p/EZfdBp0qnvglaig98vhznZ9vQgYGIAl298MdqWxPXXnN28g1Aj7lzTSQsH8EBBnLA==" />
+    <meta name="csrf-token" content="BF0pP1DXCjhdKUL4VYQOzGzjJsbY9B9jGw1+UtBzsCGlhDvzqWobsgqv5tAiY/B4GGKgA+nG3kal5bcw7h0czw==" />
   </head>
   <body ng-app='building'>
     <div class='uk-container uk-container-center su-container' ng-controller='Main'>
@@ -284,7 +284,7 @@
           <img class='data-uk-margin' ng-src='{{current_entity.thumbnail_src}}' width='123'>
         </div>
         <div class='uk-width-2-3' ng-show='current_entity.type'>
-          <form class="uk-form" action="" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="wG373KfMirlzb7DTk8pbpQLNmsvvuxVwMMfEMle3SYkK0WwihX2iSbSDMtRgSGzBfpcL1KIcqqbonDUVAHGgxA==" />
+          <form class="uk-form" action="" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="Y23k1BdvkLBPA5krxh6XWO4u5CWETKnlJwFN3DC37ojBl6+JIaKgl7A9mcZihFkWOWLZRl/8bJSELAWPsoasMQ==" />
                     <input class='uk-form-small uk-margin-bottom uk-float-right fc-name-field' ng-model='readable_name(current_entity.name)'>
                     <div class='uk-clearfix'></div>
           </form>
@@ -301,11 +301,11 @@
         <div ui-view></div>
       </div>
       <div class='uk-container' id='user_profile'>
-        <div ng-show='!CurrentUser.isLogin()'>
+        <div ng-show='!is_login()'>
           <button class='uk-button uk-button-primary uk-float-right uk-margin-right' ui-sref='register'>我要注册</button>
           <button class='uk-button uk-button-primary uk-float-right uk-margin-right' ui-sref='login'>我要登录</button>
         </div>
-        <div ng-show='CurrentUser.isLogin()'>
+        <div ng-show='is_login()'>
           <button class='uk-button uk-button-primary' ng-click='sign_out()'>退出</button>
         </div>
       </div>
