@@ -13,6 +13,23 @@ module Helper
     Net::HTTP.get uri
   end
 
+  def remove_data  path
+    FileUtils.rm_rf File.join($TMP_FILE_PATH, path)
+  end
+
+  def save_data data, path
+    FileUtils.rm_rf File.join($TMP_FILE_PATH, path)
+    File.write(File.join($TMP_FILE_PATH, path), data)
+  end
+
+  def retrive_data path
+    begin
+      File.read(File.join($TMP_FILE_PATH, path))
+    rescue
+      "{}"
+    end
+  end
+
   def humanize_file_size(size)
     if size > 2 ** 30
       sprintf "%.1fG" % (size.to_f / 2 ** 30)

@@ -13,6 +13,18 @@ class Context
   attr_accessor :logger, :dialog
   attr_accessor :current_user
 
+  def persist_session
+    save_data(current_user.to_json, "user_session")
+  end
+
+  def remove_session
+    remove_data "user_session"
+  end
+
+  def load_session
+    self.current_user = User.from_json(retrive_data("user_session"))
+  end
+
   def update_js_value(dialog, id, new_val)
     js_command = "var dom = document.getElementById('data_transfer_channel'); var scope = angular.element(dom).scope(); scope.$apply(function() { scope.#{id} = JSON.parse('#{new_val}');});"
     logger.debug js_command
@@ -21,6 +33,12 @@ class Context
 
   def update_resolve(dialog, id, new_val)
     js_command = "var dom = document.getElementById('#{id}'); var scope = angular.element(dom).scope(); scope.$apply(function() { scope.resolve('#{new_val}');});"
+    logger.debug js_command
+    dialog.execute_script(js_command)
+  end
+
+  def call_js_function(dialog, id, fun, data)
+    js_command = "var dom = document.getElementById('#{id}'); var scope = angular.element(dom).scope(); scope.$apply(function() { scope.#{fun}('#{data}');});"
     logger.debug js_command
     dialog.execute_script(js_command)
   end

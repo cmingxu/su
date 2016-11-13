@@ -17,6 +17,7 @@ initialization
 list_attribute_dictionaries
 logger
 login
+sign_out
 lost_local_skps
 remove_local_component_definition
 replace_by_name

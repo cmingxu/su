@@ -3,6 +3,7 @@ class Login < Action::Base
     ctx.current_user = User.from_params params
     ctx.current_user.login!
     ctx.update_js_value(dialog, "current_user", ctx.current_user.to_json)
+    ctx.persist_session
     if ctx.current_user.logged_in?
       ctx.update_resolve(dialog, "data_transfer_channel_login", ctx.current_user.to_json)
     else

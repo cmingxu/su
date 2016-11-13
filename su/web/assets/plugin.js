@@ -6249,13 +6249,23 @@ angular.module("templates").run(["$templateCache", function($templateCache) {
 
   building.service('CurrentUser', [
     '$q', '$timeout', function($q, $timeout) {
-      var login, self;
+      var auto_sign_in, login, self, sign_out;
       this.password = null;
       this.mobile = null;
       this.auth_token = null;
       self = this;
       this.is_login = function() {
         return self.auth_token !== null;
+      };
+      auto_sign_in = function(user) {
+        self.password = user.password;
+        self.mobile = user.mobile;
+        return self.auth_token = user.auth_token;
+      };
+      sign_out = function() {
+        self.password = null;
+        self.mobile = null;
+        return self.auth_token = null;
       };
       login = function(scope) {
         var timeoutFun;
@@ -6278,6 +6288,8 @@ angular.module("templates").run(["$templateCache", function($templateCache) {
         return scope.defered.promise;
       };
       this.login = login;
+      this.auto_sign_in = auto_sign_in;
+      this.sign_out = sign_out;
       return this;
     }
   ]);
@@ -6439,8 +6451,7 @@ angular.module("templates").run(["$templateCache", function($templateCache) {
 
   building.controller("Main", [
     '$scope', '$http', '$timeout', "Entity", "CurrentUser", function($scope, $http, $timeout, Entity, CurrentUser) {
-      $scope.current_user = CurrentUser;
-      $scope.is_login = CurrentUser.is_login;
+      $scope.CurrentUser = CurrentUser;
       $scope.current_entity = {};
       $scope.local_models = [];
       $scope.$watch('current_entity', function(oldV, newV) {
@@ -6495,9 +6506,13 @@ angular.module("templates").run(["$templateCache", function($templateCache) {
         return $scope.bridge("replace_by_name", model_name);
       };
       $scope.sign_out = function() {
-        return $http["delete"]("/api/users/sign_out").success(function(response) {
-          return window.location.hash = "/login";
-        });
+        CurrentUser.sign_out();
+        return $scope.bridge("sign_out", "200");
+      };
+      $scope.auto_sign_in = function(data) {
+        var user;
+        user = JSON.parse(data);
+        return CurrentUser.auto_sign_in(user);
       };
       return $timeout(function() {
         return $scope.bridge('initialization', 200);

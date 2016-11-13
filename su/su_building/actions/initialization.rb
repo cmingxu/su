@@ -49,6 +49,9 @@ class Initialization < Action::Base
     when Sketchup::Face
     end
 
+    context.load_session
+    context.call_js_function(dialog, "data_transfer_channel", "auto_sign_in", context.current_user.to_json)
+
     # initiate current_model
     context.update_js_value(dialog, "current_entity", current_entity.to_json)
 

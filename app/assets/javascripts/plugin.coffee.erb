@@ -92,6 +92,15 @@ building.service 'CurrentUser', ['$q','$timeout', ($q, $timeout) ->
   this.is_login = ()->
     return self.auth_token != null
 
+  auto_sign_in = (user) ->
+    self.password = user.password
+    self.mobile = user.mobile
+    self.auth_token = user.auth_token
+
+  sign_out = () ->
+    self.password = null
+    self.mobile = null
+    self.auth_token = null
 
   login = (scope)->
     scope.defered = $q.defer()
@@ -110,6 +119,8 @@ building.service 'CurrentUser', ['$q','$timeout', ($q, $timeout) ->
     scope.defered.promise
 
    this.login = login
+   this.auto_sign_in = auto_sign_in
+   this.sign_out = sign_out
 
    this
   ]
@@ -224,8 +235,7 @@ building.controller "System", ['$scope', '$http', '$interval', "Entity", ($scope
 ]
 
 building.controller "Main", ['$scope', '$http', '$timeout', "Entity", "CurrentUser", ($scope, $http, $timeout, Entity, CurrentUser) ->
-  $scope.current_user = CurrentUser
-  $scope.is_login = CurrentUser.is_login
+  $scope.CurrentUser = CurrentUser
   $scope.current_entity = {}
   $scope.local_models = []
 
@@ -273,8 +283,12 @@ building.controller "Main", ['$scope', '$http', '$timeout', "Entity", "CurrentUs
     $scope.bridge "replace_by_name", model_name
 
   $scope.sign_out = ->
-    $http.delete("/api/users/sign_out").success (response) ->
-      window.location.hash = "/login"
+    CurrentUser.sign_out()
+    $scope.bridge "sign_out", "200"
+
+  $scope.auto_sign_in = (data)->
+    user = JSON.parse(data)
+    CurrentUser.auto_sign_in user
 
   $timeout ()->
     $scope.bridge 'initialization'
