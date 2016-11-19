@@ -8,6 +8,7 @@ end
 Sketchup::require File.join(File.dirname(__FILE__), 'action_callback')
 Sketchup::require File.join(File.dirname(__FILE__), 'context')
 Sketchup::require File.join(File.dirname(__FILE__), 'user')
+Sketchup::require File.join(File.dirname(__FILE__), 'entities')
 
 class BuildingUI
   HEIGHT = 600

@@ -1,7 +1,7 @@
 class Api::EntitiesController < Api::BaseController
   respond_to :json
   before_action :login_from_auth_token!, only: [:create]
-  before_action :authenticate!, only: [:mine, :destroy]
+  before_action :authenticate!, only: [:mine, :destroy, :remove]
 
   def index
     @entities = Entity.visible.site_level.page params[:page]
@@ -34,6 +34,12 @@ class Api::EntitiesController < Api::BaseController
 
   def destroy
     current_user.entities.where(uuid: params[:id]).first.destroy
+    @entities = current_user.entities.reload
+    render action: 'index'
+  end
+
+  def remove
+    current_user.entities.where(uuid: params[:uuid]).first.destroy
     @entities = current_user.entities.reload
     render action: 'index'
   end

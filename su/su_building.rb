@@ -17,6 +17,9 @@ initialization
 list_attribute_dictionaries
 logger
 login
+entity_index
+entity_mine
+remove_entity
 sign_out
 lost_local_skps
 remove_local_component_definition

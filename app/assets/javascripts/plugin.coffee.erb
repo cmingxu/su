@@ -68,20 +68,69 @@ building.directive 'su-number-format', ['$filter', ($filter) ->
     ctrl.$parser.push parse
 ]
 
-building.factory "Entity", ['$resource', ($resource, ApiUrl) ->
-  $resource("/api/entities/:id", {id: '@id'}, {
-    index:
-      method: 'GET'
-      isArray: true
-      url: ApiUrl + "/api/entities"
-    mine:
-      url: ApiUrl + "/api/entities/mine"
-      method: 'GET'
-      isArray: true
-    remove_enetity:
-      url: ApiUrl + "/api/entities/:uuid"
-      method: 'DELETE'
-  })
+building.service 'Entity', ['$q', '$timeout', ($q, $timeout) ->
+  index = (scope, page, search, data_transfer_channel) ->
+    scope.defered = $q.defer()
+    scope.resolve_mark = 0
+    scope.reject = (data)->
+      scope.resolve_mark = 1
+      scope.defered.reject(JSON.parse(data))
+    scope.resolve = (data)->
+      scope.resolve_mark = 2
+      scope.defered.resolve(JSON.parse(data))
+
+    timeoutFun = ->
+      if scope.resolve_mark == 0
+        scope.defered.reject({message: ""})
+
+    scope.bridge 'entity_index', [page, search, data_transfer_channel].join("|")
+    $timeout timeoutFun, 5000
+
+    scope.defered.promise
+
+  mine = (scope, page, search, data_transfer_channel) ->
+    scope.defered = $q.defer()
+    scope.resolve_mark = 0
+    scope.reject = (data)->
+      scope.resolve_mark = 1
+      scope.defered.reject(JSON.parse(data))
+    scope.resolve = (data)->
+      scope.resolve_mark = 2
+      scope.defered.resolve(JSON.parse(data))
+
+    timeoutFun = ->
+      if scope.resolve_mark == 0
+        scope.defered.reject({message: ""})
+
+    scope.bridge 'entity_mine', [page, search, data_transfer_channel].join("|")
+    $timeout timeoutFun, 5000
+
+    scope.defered.promise
+
+  remove_entity = (scope, uuid, data_transfer_channel) ->
+    scope.defered = $q.defer()
+    scope.resolve_mark = 0
+    scope.reject = (data)->
+      scope.resolve_mark = 1
+      scope.defered.reject(JSON.parse(data))
+    scope.resolve = (data)->
+      scope.resolve_mark = 2
+      scope.defered.resolve(JSON.parse(data))
+
+    timeoutFun = ->
+      if scope.resolve_mark == 0
+        scope.defered.reject({message: ""})
+
+    scope.bridge 'remove_entity', [uuid, data_transfer_channel].join "|"
+    $timeout timeoutFun, 5000
+
+    scope.defered.promise
+
+  this.index = index
+  this.mine  = mine
+  this.remove_entity = remove_entity
+
+  this
 ]
 
 building.service 'CurrentUser', ['$q','$timeout', ($q, $timeout) ->
@@ -172,12 +221,18 @@ building.controller "Remote", ['CurrentUser', '$scope', '$http', '$interval', "E
 
   $scope.delete_remote = (model_name, uuid) ->
     if confirm("永久删除模型" + model_name + "么?" + uuid)
-      Entity.remove_enetity {uuid: uuid}, (data) ->
+      deleteSuccess = (data) ->
         $scope.remote_models = data
+      deleteFail = (data) ->
+      Entity.remove_entity($scope, uuid, 'data_transfer_channel_remote').then(deleteSuccess, deleteFail)
 
   if CurrentUser.is_login()
-    Entity.mine (data) ->
+    indexSuccess = (data) ->
       $scope.remote_models = data
+    indexFail = (data) ->
+      $scope.remote_models = []
+
+    Entity.mine($scope, "0", "", "data_transfer_channel_remote").then(indexSuccess, indexFail)
 ]
 
 building.controller "Login", ['$scope', 'CurrentUser', ($scope, CurrentUser) ->
@@ -228,9 +283,15 @@ building.controller "System", ['$scope', '$http', '$interval', "Entity", ($scope
   $scope.current_entity = {}
   $scope.system_models = {}
   $scope.current_user = {}
-  Entity.index (data) ->
-    alert data
+
+  indexSuccess = (data) ->
     $scope.system_models = data
+
+  indexFail = (data) ->
+    alert data
+    $scope.system_models = []
+
+  Entity.index($scope, 0, "", "data_transfer_channel_system").then(indexSuccess, indexFail)
 
 ]
 

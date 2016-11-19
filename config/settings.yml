@@ -4,9 +4,11 @@ default: &default
   cn_name: "建构中国"
   domain: ""
   description: ""
+  host: "http://localhost:3000"
 
 production:
   <<: *default
+  host: "http://114.55.130.152"
 
 development:
   <<: *default

@@ -1,6 +1,5 @@
 class Initialization < Action::Base
   def invoke
-    context.logger.debug "xxxxxxxxx"
     model = Sketchup.active_model
     selection = model.selection.first
     current_entity = {}

@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     resources :entities, only: [:index, :create, :destroy] do
       get :mine, on: :collection
+        post :remove, on: :collection
     end
 
     resources :users, only: [:create] do

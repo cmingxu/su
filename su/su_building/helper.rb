@@ -1,16 +1,25 @@
 require 'net/http'
 
 module Helper
-  def post uri, body, header = nil
+  def post uri, body, headers = {}
     $logger.debug "post to #{uri.host}:#{uri.port}/#{uri.path}"
     http = Net::HTTP.new(uri.host, uri.port)
-    req = Net::HTTP::Post.new(uri.path, 'Content-Type' => 'application/json')
+    headers.merge!('Content-Type' => 'application/json')
+    req = Net::HTTP::Post.new(uri.path, headers)
     req.body = body
     http.request(req)
   end
 
-  def get uri
-    Net::HTTP.get uri
+  def get url, headers = {}
+    req = Net::HTTP::Get.new(url.path)
+    headers.each do |k, v|
+      req.add_field(k, v)
+    end
+
+    res = Net::HTTP.new(url.host, url.port).start do |http|
+      http.request(req)
+    end
+    res.body
   end
 
   def remove_data  path
